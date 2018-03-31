@@ -1,6 +1,6 @@
-# wycieczkownia
+# Szafiarnia
 
-> Aplikacja do planowania wycieczek
+> Aplikacja do zarządzania szafą
 
 ## Build Setup
 
