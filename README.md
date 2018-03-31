@@ -1,6 +1,6 @@
 # Szafiarnia
 
-> Aplikacja do zarządzania szafą
+> Aplikacja do zarządzania zawartością szafy
 
 ## Build Setup
 

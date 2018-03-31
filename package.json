@@ -1,7 +1,7 @@
 {
-  "name": "wycieczkownia",
+  "name": "szafiarnia",
   "version": "1.0.0",
-  "description": "Aplikacja do planowania wycieczek",
+  "description": "Aplikacja do zarządzania zawartością szafy",
   "author": "Cichacz <m.cichacz@gmail.com>",
   "private": true,
   "scripts": {
