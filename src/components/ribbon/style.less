@@ -1,0 +1,96 @@
+@import "../../assets/less/colors";
+@import "../../assets/less/mixins";
+
+@ribbonColor: @secondary;
+
+@ribbon: 1.5em;
+@ribbonShadow: 0.4em;
+@ribbonGradient: 0.5vw;
+
+.ribbon {
+  position: relative;
+  background: @ribbonColor;
+  color: @light;
+  text-align: center;
+  margin: 0 -@ribbon/2 1em;
+  padding: 0.5vw;
+
+  &:before, &:after {
+    content: "";
+    position: absolute;
+    display: block;
+    bottom: -@ribbonShadow;
+    border: @ribbon/2 solid @ribbonColor;
+    z-index: -2;
+  }
+
+  &:before {
+    left: -1em + @ribbonShadow;
+    border-right-width: 1em;
+    border-left-width: @ribbon/4;
+    border-left-color: transparent;
+  }
+
+  &:after {
+    right: -1em + @ribbonShadow;
+    border-left-width: 1em ;
+    border-right-width: @ribbon/4;
+    border-right-color: transparent;
+  }
+
+  .ribbon-shadow {
+    position: absolute;
+    width: 100%;
+    height: @ribbon - @ribbonShadow;
+    bottom: 0;
+    left: 0;
+    box-shadow: 0 3px 3px @primary;
+
+    &:before, &:after {
+      content: "";
+      position: absolute;
+      display: block;
+      bottom: -1px;
+      height: 100%;
+      padding-bottom: 1px;
+      width: @ribbonGradient;
+      z-index: -1;
+    }
+
+    &:before {
+      left: -@ribbonGradient/2;
+      margin-right: 1px;
+      .gradient(linear; @primary, rgba(0,0,0,0); -90deg);
+    }
+
+    &:after {
+      right: -@ribbonGradient/2;
+      margin-left: 1px;
+      .gradient(linear; @primary, rgba(0,0,0,0); 90deg);
+    }
+  }
+
+  .ribbon-content {
+    border: 2px solid lighten(@ribbonColor, 20%);
+
+    &:before, &:after {
+      content: "";
+      position: absolute;
+      display: block;
+      border-style: solid;
+      border-color: @primary transparent transparent transparent;
+      bottom: -@ribbonShadow;
+      z-index: -1;
+    }
+
+    &:before {
+      left: 0;
+      border-width: @ribbonShadow 0 0 2*@ribbonShadow;
+    }
+
+    &:after {
+      right: 0;
+      border-width: @ribbonShadow 2*@ribbonShadow 0 0;
+    }
+  }
+}
