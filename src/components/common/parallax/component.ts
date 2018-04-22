@@ -7,7 +7,7 @@ import Component from 'vue-class-component'
     }
 })
 export default class ParallaxComponent extends Vue {
-    public scroll: string = '';
+    scroll: string = '';
 
     created() {
         window.addEventListener('scroll', this.scrollParallax);

@@ -1,7 +1,12 @@
 export default class Item {
-    public name: string;
+    name: string;
 
     private dirty: boolean;
+
+    constructor(name: string, dirty: boolean = false) {
+        this.name = name;
+        this.dirty = dirty;
+    }
 
     public setAsDirty() {
         this.dirty = true;

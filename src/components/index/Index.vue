@@ -19,7 +19,9 @@
                             </p>
                             <div class="row justify-content-center">
                                 <div class="col-sm-5">
-                                    <a href="#" class="btn btn-primary btn-block btn-lg mt-4">Rozpocznij porządki</a>
+                                    <router-link to="/dashboard" class="btn btn-primary btn-block btn-lg mt-4">
+                                        Rozpocznij porządki
+                                    </router-link>
                                 </div>
                             </div>
                         </div>
