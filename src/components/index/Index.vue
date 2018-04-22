@@ -1,7 +1,6 @@
 <template>
     <div class="index">
-        <div class="hero">
-            <img class="hero-bg" src="@/assets/img/bg.jpg"/>
+        <parallax class="hero" background="/static/img/bg.jpg">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-sm-8">
@@ -27,10 +26,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </parallax>
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-sm-5 mt-5">
+                <div class="col-sm-5 mt-5 mb-4">
                     <h2 class="text-center">
                         <ribbon>Dlaczego warto?</ribbon>
                     </h2>
@@ -76,4 +75,5 @@
     </div>
 </template>
 
+<script src="./component.ts" lang="ts"></script>
 <style src="./style.less" scoped lang="less"></style>

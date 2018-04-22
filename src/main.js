@@ -4,7 +4,8 @@ import Vue from 'vue';
 import WebFont from 'webfontloader';
 import App from '@/App';
 import router from '@/router';
-import Ribbon from '@/components/ribbon/Ribbon';
+import Ribbon from '@/components/common/ribbon/Ribbon';
+import Parallax from '@/components/common/parallax/Parallax';
 
 WebFont.load({
   google: {
@@ -13,6 +14,7 @@ WebFont.load({
 });
 
 Vue.component('ribbon', Ribbon);
+Vue.component('parallax', Parallax);
 
 /* eslint-disable no-new */
 new Vue({

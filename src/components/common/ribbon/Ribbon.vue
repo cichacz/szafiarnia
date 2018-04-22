@@ -4,4 +4,5 @@
         <div class="ribbon-shadow"></div>
     </div>
 </template>
-<style src="./style.less" lang="less"></style>
+<script src="./component.ts" lang="ts"></script>
+<style src="./style.less" scoped lang="less"></style>
