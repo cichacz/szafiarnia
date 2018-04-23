@@ -4,10 +4,11 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-sm-8">
-                        <h3>Logowanie</h3>
+                        <h3>Stwórz konto</h3>
                         <input type="text" placeholder="Email"><br>
                         <input type="password" placeholder="Password"><br>
-                        <button type="button" class="btn btn-success">Zaloguj</button>
+                        <input type="password" placeholder="Repeast password"><br>
+                        <button type="button" class="btn btn-success">zarejestruj</button>
                     </div>
                 </div>
             </div>

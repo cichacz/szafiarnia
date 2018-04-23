@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import IndexComponent from '@/components/index/Index';
 import DashboardComponent from '@/components/dashboard/Dashboard';
 import LoginComponent from '@/components/login/Login';
+import RegisterComponent from '@/components/register/Register';
 
 Vue.use(Router);
 
@@ -28,6 +29,17 @@ const router = new Router({
     {
       path: '/login',
       component: LoginComponent,
+      beforeEnter: (to, from, next) => {
+        if (isAuthorized) {
+          next({ path: 'dashboard' });
+          return;
+        }
+        next();
+      },
+    },
+    {
+      path: '/register',
+      component: RegisterComponent,
       beforeEnter: (to, from, next) => {
         if (isAuthorized) {
           next({ path: 'dashboard' });
