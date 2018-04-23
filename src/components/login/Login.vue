@@ -7,7 +7,8 @@
                         <h3>Logowanie</h3>
                         <input type="text" placeholder="Email"><br>
                         <input type="password" placeholder="Password"><br>
-                        <button type="button" class="btn btn-success">Zaloguj</button>
+                        <button v-on:click="login" type="button" class="btn btn-success">Zaloguj</button>
+                        <p><router-link to="/register">Stwórz konto</router-link></p>
                     </div>
                 </div>
             </div>

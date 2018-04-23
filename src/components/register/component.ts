@@ -3,6 +3,7 @@ import Component from 'vue-class-component'
 
 @Component
 export default class RegisterComponent extends Vue {
-    created() {
+    register() {
+        
     }
 }
