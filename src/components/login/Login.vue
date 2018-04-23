@@ -4,7 +4,10 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-sm-8">
-                        Logowanie
+                        <h1>
+                            <ribbon>Logowanie</ribbon>
+                        </h1>
+                        <a href="#" @click.prevent="doLogin">Zaloguj</a>
                     </div>
                 </div>
             </div>

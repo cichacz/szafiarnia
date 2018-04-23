@@ -1,12 +1,15 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import * as Cookie from 'js-cookie';
 import IndexComponent from '@/components/index/Index';
 import DashboardComponent from '@/components/dashboard/Dashboard';
 import LoginComponent from '@/components/login/Login';
 
 Vue.use(Router);
 
-const isAuthorized = false;
+const isAuthorized = () => {
+  return Cookie.get('auth') === '1';
+}
 
 const router = new Router({
   routes: [
@@ -18,7 +21,7 @@ const router = new Router({
       path: '/dashboard',
       component: DashboardComponent,
       beforeEnter: (to, from, next) => {
-        if (!isAuthorized) {
+        if (!isAuthorized()) {
           next(new Error('NOT_LOGGED'));
           return;
         }
@@ -29,7 +32,7 @@ const router = new Router({
       path: '/login',
       component: LoginComponent,
       beforeEnter: (to, from, next) => {
-        if (isAuthorized) {
+        if (isAuthorized()) {
           next({ path: 'dashboard' });
           return;
         }
