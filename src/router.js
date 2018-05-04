@@ -4,10 +4,9 @@ import IndexComponent from '@/components/index/Index';
 import DashboardComponent from '@/components/dashboard/Dashboard';
 import LoginComponent from '@/components/login/Login';
 import RegisterComponent from '@/components/register/Register';
+import * as firebase from 'firebase';
 
 Vue.use(Router);
-
-const isAuthorized = false;
 
 const router = new Router({
   routes: [
@@ -18,35 +17,14 @@ const router = new Router({
     {
       path: '/dashboard',
       component: DashboardComponent,
-      beforeEnter: (to, from, next) => {
-        if (!isAuthorized) {
-          next(new Error('NOT_LOGGED'));
-          return;
-        }
-        next();
-      },
     },
     {
       path: '/login',
       component: LoginComponent,
-      beforeEnter: (to, from, next) => {
-        if (isAuthorized) {
-          next({ path: 'dashboard' });
-          return;
-        }
-        next();
-      },
     },
     {
       path: '/register',
       component: RegisterComponent,
-      beforeEnter: (to, from, next) => {
-        if (isAuthorized) {
-          next({ path: 'dashboard' });
-          return;
-        }
-        next();
-      },
     },
   ],
 });
@@ -58,6 +36,14 @@ router.onError((e) => {
       break;
     default:
   }
+});
+
+router.beforeEach((to, from, next) => {
+  const currentUser = firebase.auth().currentUser;
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  if (requiresAuth && !currentUser) next('login');
+  else if (!requiresAuth && currentUser) next('dashboard');
+  else next();
 });
 
 export default router;

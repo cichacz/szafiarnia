@@ -9,6 +9,8 @@ import router from '@/router';
 import Ribbon from '@/components/common/ribbon/Ribbon';
 import Parallax from '@/components/common/parallax/Parallax';
 
+let app;
+
 const config = {
   apiKey: 'AIzaSyBJrtUiM7tCG-yxLwsCJQUQsQzcJNdSMuQ',
   authDomain: 'szafiarnia-d3f21.firebaseapp.com',
@@ -17,8 +19,6 @@ const config = {
   storageBucket: 'szafiarnia-d3f21.appspot.com',
   messagingSenderId: '262622244699',
 };
-
-firebase.initializeApp(config);
 
 WebFont.load({
   google: {
@@ -30,10 +30,14 @@ Vue.component('ribbon', Ribbon);
 Vue.component('parallax', Parallax);
 Vue.use(veeValidate);
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>',
+firebase.initializeApp(config);
+firebase.auth().onAuthStateChanged(() => {
+  if (!app) {
+    app = new Vue({
+      el: '#app',
+      router,
+      components: { App },
+      template: '<App/>',
+    });
+  }
 });

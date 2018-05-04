@@ -15,7 +15,7 @@ export default class LoginComponent extends Vue {
                 _this.$router.push('dashboard');
             },
             function(err: Error) {
-                alert('Oops. ' + err.message);
+                alert(err.message);
             }
         );
     }
