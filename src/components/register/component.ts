@@ -31,7 +31,8 @@ export default class RegisterComponent extends Vue {
                 _this.makeLogin(_this.email, _this.password);
             },
             function(err: Error) {
-                alert('Oops. ' + err.message);
+                alert(err.message);
+                console.log('Firebase register: ' + err.message);
             },
         );
     }
@@ -43,7 +44,7 @@ export default class RegisterComponent extends Vue {
             _this.$router.push('dashboard');
         },
         function(err: Error) {
-            alert('Ops. ' + err.message);
+            console.log('Firebase sign in after registration: ' + err.message);
         });
     }
 

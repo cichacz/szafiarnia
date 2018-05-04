@@ -20,7 +20,7 @@
                             <input v-model="email" v-validate="'required|email'" name="email" type="text" placeholder="Email"><br>
                             <input v-model="password" v-validate="'required'" name="password" type="password" placeholder="Password"><br>
                             <input v-model="passwordConfirmation" v-validate="'required|confirmed:password'" data-vv-as="password" name="password_confirmation" type="password" placeholder="Confirm password"><br>
-                            <button v-on:click="register" type="submit" class="btn btn-success">zarejestruj</button>
+                            <button type="submit" class="btn btn-success">zarejestruj</button>
                             <p><router-link to="/login">Zaloguj się</router-link></p>
                         </div>
                     </div>
