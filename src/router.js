@@ -4,12 +4,11 @@ import * as Cookie from 'js-cookie';
 import IndexComponent from '@/components/index/Index';
 import DashboardComponent from '@/components/dashboard/Dashboard';
 import LoginComponent from '@/components/login/Login';
+import ContainerComponent from './components/container/Container';
 
 Vue.use(Router);
 
-const isAuthorized = () => {
-  return Cookie.get('auth') === '1';
-}
+const isAuthorized = () => Cookie.get('auth') === '1';
 
 const router = new Router({
   routes: [
@@ -18,7 +17,8 @@ const router = new Router({
       component: IndexComponent,
     },
     {
-      path: '/dashboard',
+      name: 'panel',
+      path: '/panel',
       component: DashboardComponent,
       beforeEnter: (to, from, next) => {
         if (!isAuthorized()) {
@@ -27,13 +27,22 @@ const router = new Router({
         }
         next();
       },
+      children: [
+        {
+          name: 'container',
+          path: 'container/:type',
+          component: ContainerComponent,
+          props: true,
+        },
+      ],
     },
     {
+      name: 'login',
       path: '/login',
       component: LoginComponent,
       beforeEnter: (to, from, next) => {
         if (isAuthorized()) {
-          next({ path: 'dashboard' });
+          next({ name: 'panel' });
           return;
         }
         next();
@@ -45,7 +54,7 @@ const router = new Router({
 router.onError((e) => {
   switch (e.message) {
     case 'NOT_LOGGED':
-      router.push({ path: 'login' });
+      router.push({ name: 'login' });
       break;
     default:
   }

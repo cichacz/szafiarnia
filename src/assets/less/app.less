@@ -1,8 +1,9 @@
 @import "colors";
 @import "variables";
 @import "mixins";
-@import "reset";
+//@import "reset";
 @import "typography";
+@import "animations";
 @import "overrides";
 
 body {
@@ -10,4 +11,26 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: @fontColor;
   background: @bgColor;
+}
+
+.hero {
+  height: 100vh;
+  position: relative;
+  background: @bgColor;
+  overflow: hidden;
+  z-index: 1;
+  background-size: cover;
+  background-position: center;
+}
+
+.content {
+  background: fadeOut(@bgColor, 40%);
+  box-shadow: 0 2px 3px @primary;
+  padding: 2em 1em;
+
+  p {
+    text-indent: 2em;
+    margin-bottom: 0.5em;
+    text-align: justify;
+  }
 }

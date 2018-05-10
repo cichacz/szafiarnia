@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import WebFont from 'webfontloader';
-import App from '@/App';
+import App from '@/app/App';
 import router from '@/router';
 import Ribbon from '@/components/common/ribbon/Ribbon';
 import Parallax from '@/components/common/parallax/Parallax';

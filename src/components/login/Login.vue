@@ -4,10 +4,12 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-sm-8">
-                        <h1>
-                            <ribbon>Logowanie</ribbon>
-                        </h1>
-                        <a href="#" @click.prevent="doLogin">Zaloguj</a>
+                        <div class="content -ribbon clearfix">
+                            <h1>
+                                <ribbon>Logowanie</ribbon>
+                            </h1>
+                            <a href="#" @click.prevent="doLogin">Zaloguj</a>
+                        </div>
                     </div>
                 </div>
             </div>

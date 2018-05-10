@@ -7,6 +7,6 @@ import 'vue-router'
 export default class LoginComponent extends Vue {
   doLogin() {
     Cookie.set('auth', '1');
-    this.$router.push('dashboard');
+    this.$router.push({name: 'panel'});
   }
 }
