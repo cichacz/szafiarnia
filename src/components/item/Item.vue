@@ -2,7 +2,7 @@
     <div>
         <ul>
             <li v-for="item in items" :key="item.name">
-                <router-link :to="{name: 'item'}">{{ item.name }}</router-link>
+                <a href="#">{{ item.name }}</a>
             </li>
         </ul>
     </div>

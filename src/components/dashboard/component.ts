@@ -17,15 +17,15 @@ export default class DashboardComponent extends Vue {
   mounted() {
     //preselect default container
     let defaultContainer = this.containers.filter((el: Container) => el.type == ContainerType.Default);
-    if(defaultContainer.length) {
+    if(defaultContainer.length && this.$route.name != 'container') {
       this.$router.replace(this.getUrl(defaultContainer.pop()!))
     }
+  }
 
-    logout() {
-        firebase.auth().signOut().then(() => {
-            this.$router.replace('login');
-        });
-    }
+  logout() {
+    firebase.auth().signOut().then(() => {
+      this.$router.replace('login');
+    });
   }
 
   isActive(container: Container) {
