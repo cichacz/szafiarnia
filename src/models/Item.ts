@@ -2,6 +2,8 @@ export default class Item {
     name: string;
     colourGroup: ColourGroup;
     subcategory: string;
+    laundryCategory: LaundryCategory;
+    packingCategory: PackingCategory;
 
     private dirty: boolean;
 
@@ -30,4 +32,27 @@ export enum ColourGroup {
     Multicolour
 }
 
+export enum LaundryCategory
+{
+    Delicate,
+    Sport,
+    Cotton,
+    Wool,
+    Linen,
+    Alergic,
+    Regular
+}
+
+export enum PackingCategory
+{
+    Underwear,
+    Socks,
+    Shirts,
+    Trousers,
+    Shoes,
+    Jacket,
+    Skirts,
+    Accessories,
+    Other,
+}
 // export enum 
