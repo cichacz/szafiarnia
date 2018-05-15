@@ -4,12 +4,11 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-sm-8">
-                        <div class="content -ribbon clearfix">
-                            <h1>
-                                <ribbon>Logowanie</ribbon>
-                            </h1>
-                            <a href="#" @click.prevent="doLogin">Zaloguj</a>
-                        </div>
+                        <h3>Logowanie</h3>
+                        <input v-model="email" type="text" placeholder="Email"><br>
+                        <input v-model="password" type="password" placeholder="Password"><br>
+                        <button v-on:click="login" type="submit" class="btn btn-success">Zaloguj</button>
+                        <p><router-link to="/register">Stwórz konto</router-link></p>
                     </div>
                 </div>
             </div>

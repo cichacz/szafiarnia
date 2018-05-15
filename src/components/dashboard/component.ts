@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import * as firebase from 'firebase'
+import 'vue-router'
 import Container from "@/models/Container"
 import {ContainerType} from "@/models/Container";
 
@@ -17,6 +19,12 @@ export default class DashboardComponent extends Vue {
     let defaultContainer = this.containers.filter((el: Container) => el.type == ContainerType.Default);
     if(defaultContainer.length) {
       this.$router.replace(this.getUrl(defaultContainer.pop()!))
+    }
+
+    logout() {
+        firebase.auth().signOut().then(() => {
+            this.$router.replace('login');
+        });
     }
   }
 

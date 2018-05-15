@@ -1,12 +1,22 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import * as Cookie from 'js-cookie'
-import 'vue-router'
+import * as firebase from 'firebase'
 
 @Component
 export default class LoginComponent extends Vue {
-  doLogin() {
-    Cookie.set('auth', '1');
-    this.$router.push({name: 'panel'});
-  }
+
+    email = '';
+    password = '';
+
+    login() {
+        const _this = this;
+        firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
+            function(user: firebase.User) {
+                _this.$router.push('dashboard');
+            },
+            function(err: Error) {
+                alert(err.message);
+            }
+        );
+    }
 }

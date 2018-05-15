@@ -1,14 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import * as Cookie from 'js-cookie';
 import IndexComponent from '@/components/index/Index';
 import DashboardComponent from '@/components/dashboard/Dashboard';
 import LoginComponent from '@/components/login/Login';
-import ContainerComponent from './components/container/Container';
+import RegisterComponent from '@/components/register/Register';
+import * as firebase from 'firebase';
 
 Vue.use(Router);
-
-const isAuthorized = () => Cookie.get('auth') === '1';
 
 const router = new Router({
   routes: [
@@ -26,6 +24,8 @@ const router = new Router({
           return;
         }
         next();
+      meta: {
+        requiresAuth: true,
       },
       children: [
         {
@@ -40,13 +40,10 @@ const router = new Router({
       name: 'login',
       path: '/login',
       component: LoginComponent,
-      beforeEnter: (to, from, next) => {
-        if (isAuthorized()) {
-          next({ name: 'panel' });
-          return;
-        }
-        next();
-      },
+    },
+    {
+      path: '/register',
+      component: RegisterComponent,
     },
   ],
 });
@@ -58,6 +55,14 @@ router.onError((e) => {
       break;
     default:
   }
+});
+
+router.beforeEach((to, from, next) => {
+  const currentUser = firebase.auth().currentUser;
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  if (requiresAuth && !currentUser) next('login');
+  else if (currentUser && (to.path === '/login' || to.path === '/register')) next('dashboard');
+  else next();
 });
 
 export default router;
