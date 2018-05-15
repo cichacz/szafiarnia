@@ -4,7 +4,8 @@ export default class Item {
     subcategory: string;
     laundryCategory: LaundryCategory;
     packingCategory: PackingCategory;
-
+    //brakuje dodawania, usuwania i wyświetlania zdjęć https://alligator.io/vuejs/uploading-vue-picture-input/
+    
     private dirty: boolean;
 
     constructor(name: string, dirty: boolean = false) {
