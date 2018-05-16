@@ -12,7 +12,6 @@ export default class ContainerComponent extends Vue {
   items: Item[] = [];
 
   created() {
-    console.log(this.type);
     //pobieramy z firebase itemy co mają ustawiony typ containera na otrzymany
     //@todo Maciek
     //zmapować na klasę Item

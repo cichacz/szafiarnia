@@ -31,6 +31,11 @@ const router = new Router({
           props: true,
         },
         {
+          name: 'item-add',
+          path: 'item',
+          component: ItemComponent,
+        },
+        {
           name: 'item',
           path: 'item/:id',
           component: ItemComponent,
