@@ -19,6 +19,7 @@
     "vee-validate": "^2.0.6",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
+    "vuefire": "^1.4.5",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {

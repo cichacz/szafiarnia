@@ -8,6 +8,7 @@ import App from '@/App';
 import router from '@/router';
 import Ribbon from '@/components/common/ribbon/Ribbon';
 import Parallax from '@/components/common/parallax/Parallax';
+import VueFire from 'vuefire';
 
 let app;
 
@@ -29,8 +30,10 @@ WebFont.load({
 Vue.component('ribbon', Ribbon);
 Vue.component('parallax', Parallax);
 Vue.use(veeValidate);
+Vue.use(VueFire);
 
 firebase.initializeApp(config);
+
 firebase.auth().onAuthStateChanged(() => {
   if (!app) {
     app = new Vue({
