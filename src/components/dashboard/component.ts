@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import * as firebase from 'firebase'
 import 'vue-router'
-import Container from '../../models/Container'
-import {ContainerType} from '../../models/Container';
+import Container from '@/models/Container'
+import {ContainerType} from '@/models/Container';
 
 @Component
 export default class DashboardComponent extends Vue {
