@@ -2,13 +2,16 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import WebFont from 'webfontloader';
-import firebase from 'firebase';
 import veeValidate from 'vee-validate';
 import App from '@/App';
 import router from '@/router';
 import Ribbon from '@/components/common/ribbon/Ribbon';
 import Parallax from '@/components/common/parallax/Parallax';
-import VueFire from 'vuefire';
+
+const firebase = require('firebase');
+require('firebase/firestore');
+
+/* eslint-disable */
 
 let app;
 
@@ -21,6 +24,7 @@ const config = {
   messagingSenderId: '262622244699',
 };
 
+
 WebFont.load({
   google: {
     families: ['Lobster', 'Raleway:300,400:latin-ext'],
@@ -30,9 +34,11 @@ WebFont.load({
 Vue.component('ribbon', Ribbon);
 Vue.component('parallax', Parallax);
 Vue.use(veeValidate);
-Vue.use(VueFire);
+
+
 
 firebase.initializeApp(config);
+const db = firebase.firestore();
 
 firebase.auth().onAuthStateChanged(() => {
   if (!app) {

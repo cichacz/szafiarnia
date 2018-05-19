@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import * as Cookie from 'js-cookie';
 import IndexComponent from '@/components/index/Index';
 import DashboardComponent from '@/components/dashboard/Dashboard';
 import LoginComponent from '@/components/login/Login';
