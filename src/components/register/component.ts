@@ -6,46 +6,29 @@ import VeeValidate from 'vee-validate';
 @Component
 export default class RegisterComponent extends Vue {
 
-    email = '';
-    password = '';
-    passwordConfirmation = '';
+  email = '';
+  password = '';
+  error = '';
 
-    validateBeforeSubmit() {
-        const _this = this;
-        this.$validator.validateAll()
-        .then(function(response) {
-          console.log('Success ' + response);
-          _this.register();
-        })
-        .catch(function(e) {
-          console.log('Error ' + e.message);
-          alert('Oops. ' + e.message);
-        })
-    }
+  register() {
+    firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
+      (user: firebase.User) => {
+        console.log('User registered');
+        this._makeLogin(this.email, this.password);
+      },(err: Error) => {
+        console.log('Firebase register: ' + err.message);
+        this.error = err.message;
+      },
+    );
+  }
 
-    register() {
-        const _this = this;
-        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-            function(user: firebase.User) {
-                console.log('User registered');
-                _this.makeLogin(_this.email, _this.password);
-            },
-            function(err: Error) {
-                alert(err.message);
-                console.log('Firebase register: ' + err.message);
-            },
-        );
-    }
-
-    makeLogin(email: string, password: string) {
-        const _this = this;
-        firebase.auth().signInWithEmailAndPassword(email, password).then(
-        function(user: firebase.User) {
-            _this.$router.push('dashboard');
-        },
-        function(err: Error) {
-            console.log('Firebase sign in after registration: ' + err.message);
-        });
-    }
+  private _makeLogin(email: string, password: string) {
+    firebase.auth().signInWithEmailAndPassword(email, password).then(
+      (user: firebase.User) => {
+        this.$router.push({name: 'panel'});
+      }, (err: Error) => {
+        console.log('Firebase sign in after registration: ' + err.message);
+      });
+  }
 
 }

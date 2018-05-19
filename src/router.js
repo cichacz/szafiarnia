@@ -5,6 +5,8 @@ import DashboardComponent from '@/components/dashboard/Dashboard';
 import LoginComponent from '@/components/login/Login';
 import RegisterComponent from '@/components/register/Register';
 import * as firebase from 'firebase';
+import ItemComponent from '@/components/item/Item';
+import ContainerComponent from '@/components/container/Container';
 
 Vue.use(Router);
 
@@ -15,13 +17,34 @@ const router = new Router({
       component: IndexComponent,
     },
     {
-      path: '/dashboard',
+      name: 'panel',
+      path: '/panel',
       component: DashboardComponent,
       meta: {
         requiresAuth: true,
       },
+      children: [
+        {
+          name: 'container',
+          path: 'container/:type',
+          component: ContainerComponent,
+          props: true,
+        },
+        {
+          name: 'item-add',
+          path: 'item',
+          component: ItemComponent,
+        },
+        {
+          name: 'item',
+          path: 'item/:id',
+          component: ItemComponent,
+          props: true,
+        },
+      ],
     },
     {
+      name: 'login',
       path: '/login',
       component: LoginComponent,
     },
@@ -35,7 +58,7 @@ const router = new Router({
 router.onError((e) => {
   switch (e.message) {
     case 'NOT_LOGGED':
-      router.push({ path: 'login' });
+      router.push({ name: 'login' });
       break;
     default:
   }

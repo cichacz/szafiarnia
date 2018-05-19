@@ -3,7 +3,7 @@
         <parallax class="hero" background="/static/img/bg.jpg">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-sm-8">
+                    <div class="col-md-10 col-lg-8">
                         <div class="content -ribbon clearfix">
                             <h1>
                                 <ribbon>Szafiarnia</ribbon>
@@ -18,8 +18,8 @@
                                 luctus et interdum adipiscing wisi.
                             </p>
                             <div class="row justify-content-center">
-                                <div class="col-sm-5">
-                                    <router-link to="/dashboard" class="btn btn-primary btn-block btn-lg mt-4">
+                                <div class="col-sm-7 col-md-8 col-lg-6">
+                                    <router-link :to="{name: 'panel'}" class="btn btn-primary btn-block btn-lg mt-4">
                                         Rozpocznij porządki
                                     </router-link>
                                 </div>

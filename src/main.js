@@ -2,11 +2,12 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import WebFont from 'webfontloader';
-import veeValidate from 'vee-validate';
-import App from '@/App';
+import App from '@/app/App';
 import router from '@/router';
 import Ribbon from '@/components/common/ribbon/Ribbon';
 import Parallax from '@/components/common/parallax/Parallax';
+import pl from 'vee-validate/dist/locale/pl';
+import VeeValidate, { Validator } from 'vee-validate';
 
 const firebase = require('firebase');
 require('firebase/firestore');
@@ -33,7 +34,11 @@ WebFont.load({
 
 Vue.component('ribbon', Ribbon);
 Vue.component('parallax', Parallax);
-Vue.use(veeValidate);
+
+
+// Localize takes the locale object as the second argument (optional) and merges it.
+Validator.localize('pl', pl);
+Vue.use(VeeValidate);
 
 
 
