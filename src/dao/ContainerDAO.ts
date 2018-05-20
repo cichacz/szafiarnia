@@ -20,7 +20,9 @@ export default class ContainerDAO {
                 db.collection("containers/" + container.id + "/items").get()
                 .then((items: any) => {
                     items = items.docs.map((item: any) => {
-                        return new Item(item.data().name);
+                        var result = new Item(item.data().name, item.data().isDirty);
+                        result.id = item.id;
+                        return result;
                     })
                     callback(items);
                 })

@@ -1,5 +1,5 @@
 export default class Item {
-  id: number;
+  id: string;
   name: string;
   colourGroup: ColourGroup;
   subcategory: string;
