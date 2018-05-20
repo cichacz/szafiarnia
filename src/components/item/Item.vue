@@ -15,21 +15,21 @@
                         <label for="color">Grupa kolorów</label>
                         <select v-model="currentItem.colourGroup" id="color" class="form-control">
                             <option value="" disabled>-- wybierz --</option>
-                            <option v-for="(i,k) in colorGroup" v-if="isNaN(k)" :key="i" :value="i">{{ k }}</option>
+                            <option v-for="(i,k) in colorGroup" v-if="isNaN(k)" :key="i" :value="i">{{ $t('ColorGroup.' + k) }}</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="color">Kategoria prania</label>
                         <select v-model="currentItem.laundryCategory" id="color" class="form-control">
                             <option value="" disabled>-- wybierz --</option>
-                            <option v-for="(i,k) in laundryCategory" v-if="isNaN(k)" :key="i" :value="i">{{ k }}</option>
+                            <option v-for="(i,k) in laundryCategory" v-if="isNaN(k)" :key="i" :value="i">{{ $t('LaundryCategory.' + k) }}</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="color">Kategia pakowania</label>
                         <select v-model="currentItem.packingCategory" id="color" class="form-control">
                             <option value="" disabled>-- wybierz --</option>
-                            <option v-for="(i,k) in packingCategory" v-if="isNaN(k)" :key="i" :value="i">{{ k }}</option>
+                            <option v-for="(i,k) in packingCategory" v-if="isNaN(k)" :key="i" :value="i">{{ $t('PackingCategory.' + k) }}</option>
                         </select>
                     </div>
                     <div>
