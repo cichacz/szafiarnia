@@ -8,6 +8,7 @@ import Ribbon from '@/components/common/ribbon/Ribbon';
 import Parallax from '@/components/common/parallax/Parallax';
 import pl from 'vee-validate/dist/locale/pl';
 import VeeValidate, { Validator } from 'vee-validate';
+import VueFire from 'vuefire';
 
 const firebase = require('firebase');
 require('firebase/firestore');
@@ -39,19 +40,21 @@ Vue.component('parallax', Parallax);
 // Localize takes the locale object as the second argument (optional) and merges it.
 Validator.localize('pl', pl);
 Vue.use(VeeValidate);
-
-
+Vue.use(VueFire);
 
 firebase.initializeApp(config);
 const db = firebase.firestore();
+const settings = {timestampsInSnapshots: true};
+db.settings(settings);
+Vue.prototype.$db = db;
 
 firebase.auth().onAuthStateChanged(() => {
   if (!app) {
     app = new Vue({
-      el: '#app',
+      el: '#app', 
       router,
       components: { App },
       template: '<App/>',
-    });
+      });
   }
 });

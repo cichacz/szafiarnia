@@ -2,7 +2,12 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import {Prop} from "vue-property-decorator";
 import Item from "@/models/Item";
+import Container from "@/models/Container";
 import {ContainerType} from "@/models/Container";
+import ContainerDAO from '@/dao/ContainerDAO';
+
+const firebase = require('firebase');
+require('firebase/firestore');
 
 @Component
 export default class ContainerComponent extends Vue {
@@ -12,10 +17,6 @@ export default class ContainerComponent extends Vue {
   items: Item[] = [];
 
   created() {
-    //pobieramy z firebase itemy co mają ustawiony typ containera na otrzymany
-    //@todo Maciek
-    //zmapować na klasę Item
-
-    this.items.push(new Item("Koszulka"))
+    ContainerDAO.getItemsWithContainerType('Default', (items:any) => this.items = items);
   }
 }
