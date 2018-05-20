@@ -11,7 +11,7 @@ export default class ContainerDAO {
     static getItemsWithContainerType(containerType: string, callback: any) {
         const db = Vue.prototype.$db;
         const user = firebase.auth().currentUser;
-        const result = db.collection('containers').where('idUser', '==', user.uid)
+        db.collection('containers').where('idUser', '==', user.uid)
         .where('type', '==', containerType)
         .limit(1)
         .get()
@@ -31,9 +31,5 @@ export default class ContainerDAO {
         .catch(function(error: Error) {
             console.log('Error getting containers: ', error);
         });
-    }
-
-    static saveItem(item: string) {
-
     }
 }
