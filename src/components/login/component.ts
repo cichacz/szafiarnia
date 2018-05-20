@@ -10,7 +10,7 @@ export default class LoginComponent extends Vue {
   error = '';
 
   login() {
-    firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
+    this.$dao.login(this.email, this.password).then(
       (user: firebase.User) => {
         this.$router.push({name: 'panel'});
       }, (err: Error) => {

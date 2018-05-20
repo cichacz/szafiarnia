@@ -1,5 +1,3 @@
-import {PackingCategory} from "../models/Item";
-
 export default {
   ColorGroup: {
     White: 'Białe',

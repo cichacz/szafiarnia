@@ -1,29 +1,28 @@
 <template>
-    <div class="index">
-        <div class="hero" style="background-image: url(/static/img/bg.jpg)">
-            <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav mt-4 mt-md-auto mb-2 mb-md-auto flex-grow-1 justify-content-center">
-                        <li v-for="container in containers" :key="container.name">
-                            <router-link :to="getUrl(container)" class="nav-link h4 mb-0" :class="{active: isActive(container)}">
-                                <i :class="container.icon"></i> {{ container.name }}
-                                <span v-if="isActive(container)" class="sr-only">(current)</span>
-                            </router-link>
-                        </li>
-                    </ul>
-                    <router-link :to="{name: 'item-add'}" class="btn btn-outline-light">
-                        <i class="fa fa-plus fa-fw"></i>
-                    </router-link>
-                </div>
-            </nav>
-            <div class="container-fluid">
-                <div class="row justify-content-center">
-                    <div class="col">
-                        <router-view/>
-                    </div>
+    <div class="dashboard-body">
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary sticky-top">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mt-4 mt-md-auto mb-2 mb-md-auto flex-grow-1 justify-content-center">
+                    <li v-for="container in containers" :key="container.name">
+                        <router-link :to="getUrl(container)" class="nav-link h4 mb-0" :class="{active: isActive(container)}">
+                            <i :class="container.icon"></i> {{ container.name }}
+                            <span v-if="isActive(container)" class="sr-only">(current)</span>
+                        </router-link>
+                    </li>
+                </ul>
+                <router-link v-if="defaultContainer" :to="{name: 'item-add', params: {container: defaultContainer}}" class="btn btn-outline-light">
+                    <i class="fa fa-plus fa-fw"></i>
+                </router-link>
+                <a href="#" @click.prevent="logout" class="btn btn-outline-danger"><i class="fa fa-times"></i></a>
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col">
+                    <router-view/>
                 </div>
             </div>
         </div>

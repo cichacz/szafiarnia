@@ -1,22 +1,34 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import {Prop} from "vue-property-decorator";
+import {Prop, Watch} from "vue-property-decorator";
 import Item from "@/models/Item";
 import Container from "@/models/Container";
 import {ContainerType} from "@/models/Container";
-import ContainerDAO from '@/dao/ContainerDAO';
-
-const firebase = require('firebase');
-require('firebase/firestore');
 
 @Component
 export default class ContainerComponent extends Vue {
   @Prop()
-  type: ContainerType;
+  id: string;
 
   items: Item[] = [];
 
-  created() {
-    ContainerDAO.getItemsWithContainerType('Default', (items:any) => this.items = items);
+  mounted() {
+    this.loadContainerData(this.id);
+  }
+
+  @Watch('id')
+  onIdChange(id: string) {
+    this.loadContainerData(id);
+  }
+
+  async loadContainerData(id: string) {
+    const container = await this.$dao.getContainerById(id);
+    if(container) {
+      this.$dao.getContainerItems(container).then(data => {
+        if(data) {
+          this.items = data;
+        }
+      });
+    }
   }
 }

@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import * as firebase from 'firebase'
 import VeeValidate from 'vee-validate';
+import Container from '@/models/Container';
+import {ContainerType} from "../../models/Container";
 
 @Component
 export default class RegisterComponent extends Vue {
@@ -23,8 +25,14 @@ export default class RegisterComponent extends Vue {
   }
 
   private _makeLogin(email: string, password: string) {
-    firebase.auth().signInWithEmailAndPassword(email, password).then(
+    this.$dao.login(email, password).then(
       (user: firebase.User) => {
+
+        //tworzymy domyślne kontenery
+        this.$dao.saveContainer(new Container('Szafa'));
+        this.$dao.saveContainer(new Container('Pranie', ContainerType.Dirty));
+        this.$dao.saveContainer(new Container('Wyjazd', ContainerType.Trip));
+
         this.$router.push({name: 'panel'});
       }, (err: Error) => {
         console.log('Firebase sign in after registration: ' + err.message);

@@ -1,19 +1,33 @@
 export default class Item {
-  id: string;
+  id: string | undefined;
   name: string;
-  colourGroup: ColourGroup;
-  subcategory: string;
-  laundryCategory: LaundryCategory;
-  packingCategory: PackingCategory;
+  idContainer: string | undefined;
+  colourGroup: ColourGroup | undefined;
+  laundryCategory: LaundryCategory | undefined;
+  packingCategory: PackingCategory | undefined;
+  subcategory: string | undefined;
   //brakuje dodawania, usuwania i wyświetlania zdjęć https://alligator.io/vuejs/uploading-vue-picture-input/
 
   private dirty: boolean;
 
-  constructor(name: string, dirty: boolean = false) {
+  constructor(
+    name: string,
+    colorGroup?: ColourGroup,
+    laundryCategory?: LaundryCategory,
+    packingCategory?: PackingCategory,
+    subcategory?: string,
+    idContainer?: string,
+    isDirty: boolean = false,
+    id?: string
+  ) {
+    this.id = id;
     this.name = name;
-    this.dirty = dirty;
-
-    // this.colourGroup = ColourGroup.Black;
+    this.colourGroup = colorGroup;
+    this.laundryCategory = laundryCategory;
+    this.packingCategory = packingCategory;
+    this.subcategory = subcategory;
+    this.idContainer = idContainer;
+    this.dirty = isDirty;
   }
 
   public setAsDirty() {

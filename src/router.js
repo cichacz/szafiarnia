@@ -4,7 +4,6 @@ import IndexComponent from '@/components/index/Index';
 import DashboardComponent from '@/components/dashboard/Dashboard';
 import LoginComponent from '@/components/login/Login';
 import RegisterComponent from '@/components/register/Register';
-import * as firebase from 'firebase';
 import ItemComponent from '@/components/item/Item';
 import ContainerComponent from '@/components/container/Container';
 
@@ -26,14 +25,15 @@ const router = new Router({
       children: [
         {
           name: 'container',
-          path: 'container/:type',
+          path: 'container/:id',
           component: ContainerComponent,
           props: true,
         },
         {
           name: 'item-add',
-          path: 'item',
+          path: 'new-item/:container',
           component: ItemComponent,
+          props: true,
         },
         {
           name: 'item',
@@ -65,11 +65,14 @@ router.onError((e) => {
 });
 
 router.beforeEach((to, from, next) => {
-  const currentUser = firebase.auth().currentUser;
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  if (requiresAuth && !currentUser) next('login');
-  else if (currentUser && (to.path === '/login' || to.path === '/register')) next('dashboard');
-  else next();
+  this.a.app.$dao.getUser().then((currentUser) => {
+    const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+    if (requiresAuth && !currentUser) next({ name: 'login' });
+    else if (currentUser && (to.path === '/login' || to.path === '/register')) next({ name: 'panel' });
+    else next();
+  }).catch(() => {
+    next('/');
+  });
 });
 
 export default router;

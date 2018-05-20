@@ -9,7 +9,7 @@
                                 <ribbon>Szafiarnia</ribbon>
                             </h1>
                             <h2 class="text-center">Aplikacja do zarządzania szafą</h2>
-                            <p>
+                            <p class="content-text">
                                 Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non
                                 felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula.
                                 Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac,

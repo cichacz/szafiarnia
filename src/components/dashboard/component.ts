@@ -8,13 +8,11 @@ import {ContainerType} from '@/models/Container';
 @Component
 export default class DashboardComponent extends Vue {
 
-  containers: Container[] = [
-    new Container('Szafa'),
-    new Container('Pralka', ContainerType.Dirty),
-    new Container('Wyjazd', ContainerType.Trip)
-  ];
+  containers: Container[] = [];
 
-  mounted() {
+  async created() {
+    this.containers = await this.$dao.getContainers();
+
     //preselect default container
     let defaultContainer = this.containers.filter((el: Container) => el.type == ContainerType.Default);
     if(
@@ -28,16 +26,25 @@ export default class DashboardComponent extends Vue {
   }
 
   logout() {
-    firebase.auth().signOut().then(() => {
-      this.$router.replace('login');
+    this.$dao.logout().then(() => {
+      this.$router.replace({name: 'login'});
     });
   }
 
   isActive(container: Container) {
-    return this.$route.name == 'container' && this.$route.params['type'] == ContainerType[container.type];
+    return this.$route.name == 'container' && this.$route.params['id'] == container.id;
   }
 
   getUrl(container: Container) {
-    return { name: 'container', params: { type: ContainerType[container.type] }}
+    return { name: 'container', params: { id: container.id! }}
+  }
+
+  get defaultContainer() {
+    let defaultContainer = this.containers.filter((el: Container) => el.type == ContainerType.Default);
+    if(defaultContainer.length) {
+      return defaultContainer.pop()!.id;
+    }
+
+    return null;
   }
 }

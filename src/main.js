@@ -7,16 +7,12 @@ import router from '@/router';
 import Ribbon from '@/components/common/ribbon/Ribbon';
 import Parallax from '@/components/common/parallax/Parallax';
 import pl from 'vee-validate/dist/locale/pl';
-import vue_pl from '@/i18n/pl';
+import vuePl from '@/i18n/pl';
+import FirebaseDAO from '@/dao/FirebaseDAO';
 import VeeValidate, { Validator } from 'vee-validate';
 import VueI18n from 'vue-i18n';
 
-const firebase = require('firebase');
-require('firebase/firestore');
-
 /* eslint-disable */
-
-let app;
 
 const config = {
   apiKey: 'AIzaSyBJrtUiM7tCG-yxLwsCJQUQsQzcJNdSMuQ',
@@ -40,9 +36,10 @@ Vue.component('parallax', Parallax);
 Validator.localize('pl', pl);
 Vue.use(VeeValidate);
 Vue.use(VueI18n);
+Vue.use(FirebaseDAO, config);
 
 const messages = {
-  'pl': vue_pl
+  'pl': vuePl
 };
 
 const i18n = new VueI18n({
@@ -50,20 +47,10 @@ const i18n = new VueI18n({
   messages // set locale messages
 });
 
-firebase.initializeApp(config);
-const db = firebase.firestore();
-const settings = {timestampsInSnapshots: true};
-db.settings(settings);
-Vue.prototype.$db = db;
-
-firebase.auth().onAuthStateChanged(() => {
-  if (!app) {
-    app = new Vue({
-      el: '#app', 
-      router,
-      i18n,
-      components: { App },
-      template: '<App/>',
-      });
-  }
+new Vue({
+  el: '#app',
+  router,
+  i18n,
+  components: { App },
+  template: '<App/>',
 });
