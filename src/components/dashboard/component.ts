@@ -17,7 +17,12 @@ export default class DashboardComponent extends Vue {
   mounted() {
     //preselect default container
     let defaultContainer = this.containers.filter((el: Container) => el.type == ContainerType.Default);
-    if(defaultContainer.length && this.$route.name != 'container') {
+    if(
+      defaultContainer.length
+      && this.$route.name != 'container'
+      && this.$route.name != 'item'
+      && this.$route.name != 'item-add'
+    ) {
       this.$router.replace(this.getUrl(defaultContainer.pop()!))
     }
   }

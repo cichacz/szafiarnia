@@ -7,8 +7,9 @@ import router from '@/router';
 import Ribbon from '@/components/common/ribbon/Ribbon';
 import Parallax from '@/components/common/parallax/Parallax';
 import pl from 'vee-validate/dist/locale/pl';
+import vue_pl from '@/i18n/pl';
 import VeeValidate, { Validator } from 'vee-validate';
-import VueFire from 'vuefire';
+import VueI18n from 'vue-i18n';
 
 const firebase = require('firebase');
 require('firebase/firestore');
@@ -36,11 +37,18 @@ WebFont.load({
 Vue.component('ribbon', Ribbon);
 Vue.component('parallax', Parallax);
 
-
-// Localize takes the locale object as the second argument (optional) and merges it.
 Validator.localize('pl', pl);
 Vue.use(VeeValidate);
-Vue.use(VueFire);
+Vue.use(VueI18n);
+
+const messages = {
+  'pl': vue_pl
+};
+
+const i18n = new VueI18n({
+  locale: 'pl', // set locale
+  messages // set locale messages
+});
 
 firebase.initializeApp(config);
 const db = firebase.firestore();
@@ -53,6 +61,7 @@ firebase.auth().onAuthStateChanged(() => {
     app = new Vue({
       el: '#app', 
       router,
+      i18n,
       components: { App },
       template: '<App/>',
       });
