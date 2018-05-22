@@ -11,7 +11,7 @@ export default class ContainerComponent extends Vue {
 
   items: Item[] = [];
   ready: boolean = false;
-  busyTimeout: number;
+  busyTimeout: any;
 
   mounted() {
     this.loadContainerData(this.id);
