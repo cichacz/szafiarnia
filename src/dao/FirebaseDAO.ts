@@ -1,9 +1,8 @@
-import Vue, {PluginObject} from 'vue'
-import Item from "@/models/Item";
-import Container from "@/models/Container";
-import {ContainerType} from "@/models/Container";
-import * as firebase from "firebase";
 import DAO from "@/dao/DAO";
+import Container, {ContainerType} from "@/models/Container";
+import Item from "@/models/Item";
+import * as firebase from "firebase";
+import Vue from 'vue'
 import QueryDocumentSnapshot = firebase.firestore.QueryDocumentSnapshot;
 
 require('firebase/firestore');
@@ -87,7 +86,7 @@ export default class FirebaseDAO implements DAO {
       colourGroup: item.colourGroup,
       laundryCategory: item.laundryCategory,
       packingCategory: item.packingCategory,
-      subcategory: item.subcategory,
+      subcategory: item.subcategory || null,
       idContainer: item.idContainer,
       dirty: item.isDirty()
     };
@@ -156,39 +155,7 @@ export default class FirebaseDAO implements DAO {
     }));
   }
 
-  // async getContainerItems(container: Container) {
-  //   if (!this.user) {
-  //     return false;
-  //   }
-  //
-  //   let dbData = await this.db.collection('containers')
-  //     .where('idUser', '==', this.user.uid)
-  //     .where('type', '==', container.type)
-  //     .limit(1)
-  //     .get();
-  //
-  //   return Promise.all(dbData.docs.map((data: QueryDocumentSnapshot) => {
-  //     return
-  //   });
-  //
-  //   return this.db.collection('containers')
-  //     .where('idUser', '==', this.user.uid)
-  //     .where('type', '==', container.type)
-  //     .limit(1)
-  //     .get()
-  //     .then((container: firebase.firestore.QuerySnapshot) => {
-  //         return container.docs.map((container: Container) => {
-  //           return this.db.collection("containers/" + container.id + "/items").get()
-  //             .then((items: firebase.firestore.QuerySnapshot) => {
-  //               return items.docs.map((item: any) => {
-  //                 return new Item(...item.data());
-  //               });
-  //             })
-  //         });
-  //       }
-  //     )
-  //     .catch((error: Error) => {
-  //       console.log('Error getting containers: ', error);
-  //     });
-  // }
+  async register(email: string, password: string) {
+    return this.app.auth().createUserWithEmailAndPassword(email, password);
+  }
 }

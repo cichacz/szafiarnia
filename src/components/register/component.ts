@@ -1,9 +1,7 @@
+import Container, {ContainerType} from '@/models/Container';
+import * as firebase from 'firebase'
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import * as firebase from 'firebase'
-import VeeValidate from 'vee-validate';
-import Container from '@/models/Container';
-import {ContainerType} from "../../models/Container";
 
 @Component
 export default class RegisterComponent extends Vue {
@@ -13,7 +11,7 @@ export default class RegisterComponent extends Vue {
   error = '';
 
   register() {
-    firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
+    this.$dao.register(this.email, this.password).then(
       (user: firebase.User) => {
         console.log('User registered');
         this._makeLogin(this.email, this.password);

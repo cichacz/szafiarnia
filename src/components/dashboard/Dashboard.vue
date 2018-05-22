@@ -1,6 +1,6 @@
 <template>
     <div class="dashboard-body">
-        <nav class="navbar navbar-expand-md navbar-dark bg-primary sticky-top">
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary sticky-top shadow-sm">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
