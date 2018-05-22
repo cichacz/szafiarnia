@@ -31,7 +31,7 @@ const router = new Router({
         },
         {
           name: 'item-add',
-          path: 'new-item/:container',
+          path: 'new-item',
           component: ItemComponent,
           props: true,
         },

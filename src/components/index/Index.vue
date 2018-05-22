@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col-sm-8 mb-5">
+                <div class="col-lg-8 mb-5">
                     <div class="row justify-content-center">
                         <div class="col-md-4">
                             <div class="card">

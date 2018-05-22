@@ -13,4 +13,6 @@ export default interface DAO {
 
   saveItem(item: Item): any;
   getContainerItems(container: Container): any;
+  getContainerItemsCount(container: Container): any;
+  moveItem(item: Item, to: Container): any;
 }

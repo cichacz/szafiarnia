@@ -1,27 +1,47 @@
+import Container, {ContainerType} from '@/models/Container'
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import * as firebase from 'firebase'
 import 'vue-router'
-import Container from '@/models/Container'
-import {ContainerType} from '@/models/Container';
 
 @Component
 export default class DashboardComponent extends Vue {
+  get containers(): Container[] {
+    return this.$store.state.containers.list;
+  }
 
-  containers: Container[] = [];
+  get defaultContainer() {
+    let defaultContainer = this.containers.filter((el: Container) => el.type == ContainerType.Default);
+    if(defaultContainer.length) {
+
+      if(
+        this.$route.name != 'container'
+        && this.$route.name != 'item'
+        && this.$route.name != 'item-add'
+      ) {
+        this.$router.replace(this.getUrl(defaultContainer.pop()!));
+        return;
+      }
+
+      return defaultContainer.pop()!.id;
+    }
+
+    return null;
+  }
+
+  get dirtyCount() {
+    return this.$store.state.containers.dirtyCount;
+  }
 
   async created() {
-    this.containers = await this.$dao.getContainers();
+    this.$store.dispatch('loadContainers', this.$dao);
+  }
 
-    //preselect default container
-    let defaultContainer = this.containers.filter((el: Container) => el.type == ContainerType.Default);
-    if(
-      defaultContainer.length
-      && this.$route.name != 'container'
-      && this.$route.name != 'item'
-      && this.$route.name != 'item-add'
-    ) {
-      this.$router.replace(this.getUrl(defaultContainer.pop()!))
+  showBadge(container: Container) {
+    switch(container.type) {
+      case ContainerType.Dirty:
+        return this.dirtyCount;
+      default:
+        return false;
     }
   }
 
@@ -37,14 +57,5 @@ export default class DashboardComponent extends Vue {
 
   getUrl(container: Container) {
     return { name: 'container', params: { id: container.id! }}
-  }
-
-  get defaultContainer() {
-    let defaultContainer = this.containers.filter((el: Container) => el.type == ContainerType.Default);
-    if(defaultContainer.length) {
-      return defaultContainer.pop()!.id;
-    }
-
-    return null;
   }
 }

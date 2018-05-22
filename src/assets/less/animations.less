@@ -12,3 +12,22 @@
     transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }
 }
+
+.slide-from-top {
+  &-enter-active {
+    transition: opacity .2s, transform .2s;
+  }
+
+  &-leave-active {
+    transition: transform .5s, opacity 1s;
+  }
+
+  &-enter, &-leave-to {
+    opacity: 0;
+    -webkit-transform: translateY(-100%);
+    -moz-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    -o-transform: translateY(-100%);
+    transform: translateY(-100%);
+  }
+}

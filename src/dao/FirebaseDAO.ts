@@ -3,16 +3,10 @@ import Container, {ContainerType} from "@/models/Container";
 import Item from "@/models/Item";
 import * as firebase from "firebase";
 import Vue from 'vue'
+import DocumentReference = firebase.firestore.DocumentReference;
 import QueryDocumentSnapshot = firebase.firestore.QueryDocumentSnapshot;
 
 require('firebase/firestore');
-
-declare module 'vue/types/vue' {
-  // 3. Declare augmentation for Vue
-  interface Vue {
-    readonly $dao: FirebaseDAO
-  }
-}
 
 export default class FirebaseDAO implements DAO {
   private app: firebase.app.App;
@@ -76,9 +70,9 @@ export default class FirebaseDAO implements DAO {
     return this.db.collection("containers").add(data);
   }
 
-  async saveItem(item: Item) {
+  async saveItem(item: Item): Promise<DocumentReference|void> {
     if (!this.user || !item.idContainer) {
-      return false;
+      throw new Error('Not logged in');
     }
 
     const data = {
@@ -99,6 +93,25 @@ export default class FirebaseDAO implements DAO {
     return this.db.collection("containers/" + item.idContainer + "/items").add(data);
   }
 
+  async moveItem(item: Item, to: Container) {
+    if (!this.user) {
+      throw new Error('Not logged in');
+    }
+
+    let itemRef = await this.db.collection("containers/" + item.idContainer + "/items").doc(item.id);
+
+    let dbData = await itemRef.get();
+
+    if(dbData.exists) {
+      const doc = dbData.data()!;
+      doc.idContainer = item.idContainer = to.id;
+      this.db.collection("containers/" + to.id + "/items").add(doc);
+      itemRef.delete();
+    }
+
+    return item;
+  }
+
   async getContainers(): Promise<Container[]> {
     if (!this.user) {
       return [];
@@ -116,7 +129,7 @@ export default class FirebaseDAO implements DAO {
 
   async getContainerById(id: string): Promise<Container|undefined> {
     if (!this.user) {
-      return undefined;
+      throw new Error('Not logged in');
     }
 
     let dbData = await this.db.collection('containers')
@@ -133,9 +146,9 @@ export default class FirebaseDAO implements DAO {
     return containers.pop();
   }
 
-  async getContainerItems(container: Container): Promise<Item[]|undefined> {
+  async getContainerItems(container: Container): Promise<Item[]> {
     if (!this.user) {
-      return undefined;
+      throw new Error('Not logged in');
     }
 
     let dbData = await this.db.collection("containers/" + container.id + "/items").get();
@@ -153,6 +166,16 @@ export default class FirebaseDAO implements DAO {
         data.id
       );
     }));
+  }
+
+  async getContainerItemsCount(container: Container): Promise<number> {
+    if (!this.user) {
+      throw new Error('Not logged in');
+    }
+
+    let dbData = await this.db.collection("containers/" + container.id + "/items").get();
+
+    return dbData.docs.length;
   }
 
   async register(email: string, password: string) {

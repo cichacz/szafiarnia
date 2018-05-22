@@ -11,6 +11,16 @@ export default class RegisterComponent extends Vue {
   error = '';
 
   register() {
+    this.$validator.validateAll().then((result: any) => {
+      if(result) {
+        this._register();
+      }
+    }).catch(() => {
+      return false
+    });
+  }
+
+  _register() {
     this.$dao.register(this.email, this.password).then(
       (user: firebase.User) => {
         console.log('User registered');

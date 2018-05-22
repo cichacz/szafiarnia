@@ -1,17 +1,13 @@
+import Item, {ColourGroup, LaundryCategory, PackingCategory} from "@/models/Item";
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import {Prop} from "vue-property-decorator";
-import Item from "@/models/Item";
-import {ColourGroup, LaundryCategory, PackingCategory} from '@/models/Item';
-import Container from "../../models/Container";
+import Container, {ContainerType} from "../../models/Container";
 
 @Component
 export default class ItemComponent extends Vue {
   @Prop()
   id: string;
-
-  @Prop()
-  container: string;
 
   @Prop()
   saved: string;
@@ -30,7 +26,10 @@ export default class ItemComponent extends Vue {
 
   addItem() {
     if(!this.currentItem.idContainer) {
-      this.currentItem.idContainer = this.container;
+      let defaultContainer = this.$store.state.containers.list.find((el: Container) => el.type == ContainerType.Default);
+      if(defaultContainer) {
+        this.currentItem.idContainer = defaultContainer.id;
+      }
     }
 
     this.$dao.saveItem(this.currentItem).then((doc) => {
