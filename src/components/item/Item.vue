@@ -19,25 +19,35 @@
                     </div>
                     <div class="form-group">
                         <label for="color">Grupa kolorów</label>
-                        <select v-model="currentItem.colourGroup" id="color" class="form-control">
+                        <select v-model="currentItem.colourGroup" v-validate="'required'" name="grupa kolorów" id="color" class="form-control">
                             <option value="" disabled>-- wybierz --</option>
                             <option v-for="(i,k) in colorGroup" v-if="isNaN(k)" :key="i" :value="i">{{ $t('ColorGroup.' + k) }}</option>
                         </select>
+                         <small class="form-text text-danger" v-if="errors.has('grupa kolorów')">
+                        {{ errors.first('grupa kolorów') }}
+                        </small>
                     </div>
                     <div class="form-group">
                         <label for="color">Kategoria prania</label>
-                        <select v-model="currentItem.laundryCategory" id="color" class="form-control">
+                        <select v-model="currentItem.laundryCategory" v-validate="'required'" name="kategoria prania" id="color" class="form-control">
                             <option value="" disabled>-- wybierz --</option>
                             <option v-for="(i,k) in laundryCategory" v-if="isNaN(k)" :key="i" :value="i">{{ $t('LaundryCategory.' + k) }}</option>
                         </select>
+                        <small class="form-text text-danger" v-if="errors.has('kategoria prania')">
+                        {{ errors.first('kategoria prania') }}
+                        </small>
                     </div>
                     <div class="form-group">
-                        <label for="color">Kategia pakowania</label>
-                        <select v-model="currentItem.packingCategory" id="color" class="form-control">
+                        <label for="color">Kategoria pakowania</label>
+                        <select v-model="currentItem.packingCategory" v-validate="'required'" name="kategoria pakowania" id="color" class="form-control">
                             <option value="" disabled>-- wybierz --</option>
                             <option v-for="(i,k) in packingCategory" v-if="isNaN(k)" :key="i" :value="i">{{ $t('PackingCategory.' + k) }}</option>
                         </select>
+                            <small class="form-text text-danger" v-if="errors.has('kategoria pakowania')">
+                        {{ errors.first('kategoria pakowania') }}
+                        </small>
                     </div>
+
                     <div class="form-group">
                         <label for="subcategory">Własna kategoria</label>
                         <input v-model="currentItem.subcategory"  id="subcategory" class="form-control" placeholder="Nazwa kategorii">
