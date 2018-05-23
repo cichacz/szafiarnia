@@ -70,6 +70,27 @@ export default class FirebaseDAO implements DAO {
     return this.db.collection("containers").add(data);
   }
 
+  async getItemById(id: string, container: string): Promise<Item|undefined> {
+    if (!this.user) {
+      throw new Error('Not logged in');
+    }
+
+    const itemRef = await this.db.collection("containers/" + container + "/items").doc(id).get();
+    if(itemRef.exists) {
+      const data = itemRef.data()!;
+      return new Item(
+        data.name,
+        data.colourGroup,
+        data.laundryCategory,
+        data.packingCategory,
+        data.subcategory,
+        data.idContainer,
+        data.isDirty,
+        itemRef.id
+      );
+    }
+  }
+
   async saveItem(item: Item): Promise<DocumentReference|void> {
     if (!this.user || !item.idContainer) {
       throw new Error('Not logged in');
@@ -82,7 +103,7 @@ export default class FirebaseDAO implements DAO {
       packingCategory: item.packingCategory,
       subcategory: item.subcategory || null,
       idContainer: item.idContainer,
-      dirty: item.isDirty()
+      dirty: item.isDirty(),
     };
 
     if(item.id) {

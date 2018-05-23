@@ -53,7 +53,8 @@
                         <input v-model="currentItem.subcategory"  id="subcategory" class="form-control" placeholder="Nazwa kategorii">
                     </div>
                     <div>
-                        <button class="btn btn-success">Dodaj</button>
+                        <button v-if="!id" class="btn btn-success">Dodaj</button>
+                        <button v-if="id" class="btn btn-success">Zapisz zmiany</button>
                         <button @click.prevent="cancel" class="btn btn-secondary">Anuluj</button>
                     </div>
                 </form>

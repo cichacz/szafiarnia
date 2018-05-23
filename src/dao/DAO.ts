@@ -11,6 +11,7 @@ export default interface DAO {
   getContainers(): any;
   getContainerById(id: string): any;
 
+  getItemById(id: string, container: string): any;
   saveItem(item: Item): any;
   getContainerItems(container: Container): any;
   getContainerItemsCount(container: Container): any;

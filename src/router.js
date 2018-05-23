@@ -37,7 +37,7 @@ const router = new Router({
         },
         {
           name: 'item',
-          path: 'item/:id',
+          path: 'container/:container/item/:id',
           component: ItemComponent,
           props: true,
         },
