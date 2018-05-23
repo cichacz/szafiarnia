@@ -112,6 +112,14 @@ export default class FirebaseDAO implements DAO {
     return item;
   }
 
+  deleteItem(item: Item) {
+    if (!this.user) {
+      throw new Error('Not logged in');
+    }
+
+    return this.db.collection("containers/" + item.idContainer + "/items").doc(item.id).delete();
+  }
+
   async getContainers(): Promise<Container[]> {
     if (!this.user) {
       return [];

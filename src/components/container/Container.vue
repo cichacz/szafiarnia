@@ -34,6 +34,7 @@
                         <router-link :to="{name: 'item', params: {id: item.id}}" class="card-link">
                             Edytuj
                         </router-link>
+                        <a href="#" @click.prevent="deleteItem(item)" class="card-link text-danger">Usuń</a>
                     </div>
                 </div>
             </div>

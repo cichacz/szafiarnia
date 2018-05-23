@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^2.1.0",
+    "@types/sweetalert": "^2.0.4",
     "@vue/cli-plugin-typescript": "^3.0.0-beta.6",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
@@ -89,6 +90,7 @@
     "shelljs": "^0.7.6",
     "sinon": "^4.0.0",
     "sinon-chai": "^2.8.0",
+    "sweetalert": "^2.1.0",
     "ts-loader": "^3.5.0",
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",

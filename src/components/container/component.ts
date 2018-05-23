@@ -3,6 +3,7 @@ import Item from "@/models/Item";
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import {Prop, Watch} from "vue-property-decorator";
+import swal from 'sweetalert';
 
 @Component
 export default class ContainerComponent extends Vue {
@@ -61,6 +62,31 @@ export default class ContainerComponent extends Vue {
     if (container) {
       this.changeItemContainer(item, container);
     }
+  }
+
+  deleteItem(item: Item) {
+    swal({
+      title: "Jesteś pewien?",
+      text: "Na pewno chcesz usunąć ten przedmiot?",
+      icon: "warning",
+      dangerMode: true,
+      buttons: {
+        cancel: true,
+        confirm: true,
+      },
+    })
+      .then((willDelete: boolean) => {
+        if (willDelete) {
+          this.$dao.deleteItem(item).then(() => {
+            let idx = this.items.findIndex((x: Item) => x.id == item.id);
+            this.items.splice(idx, 1);
+            if(!this.isClean) {
+              this.$store.commit('modifyDirtyCount', -1);
+            }
+            swal("Zrobione!", "Przedmiot został usunięty!", "success");
+          });
+        }
+      });
   }
 
   private changeItemContainer(item: Item, container: Container) {
