@@ -12,7 +12,10 @@
                 <form novalidate @submit.prevent="addItem">
                     <div class="form-group">
                         <label for="name">Nazwa</label>
-                        <input v-model="currentItem.name" id="name" class="form-control">
+                        <input v-model="currentItem.name" v-validate="'required|min:3'" name="nazwa" id="name" class="form-control" placeholder="Nazwa przedmiotu">
+                        <small class="form-text text-danger" v-if="errors.has('nazwa')">
+                        {{ errors.first('nazwa') }}
+                        </small>
                     </div>
                     <div class="form-group">
                         <label for="color">Grupa kolorów</label>
@@ -37,7 +40,7 @@
                     </div>
                     <div class="form-group">
                         <label for="subcategory">Własna kategoria</label>
-                        <input v-model="currentItem.subcategory" id="subcategory" class="form-control"/>
+                        <input v-model="currentItem.subcategory"  id="subcategory" class="form-control" placeholder="Nazwa kategorii">
                     </div>
                     <div>
                         <button class="btn btn-success">Dodaj</button>
