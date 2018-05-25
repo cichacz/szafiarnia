@@ -78,7 +78,7 @@ export default class FirebaseDAO implements DAO {
 
     const itemRef = await this.db.collection("containers/" + container + "/items").doc(id).get();
     if(itemRef.exists) {
-      return this.dbDataToItem(itemRef);
+      return this.dbDataToItem(itemRef, container);
     }
   }
 
@@ -172,7 +172,9 @@ export default class FirebaseDAO implements DAO {
 
     let dbData = await this.db.collection("containers/" + container.id + "/items").get();
 
-    return Promise.all(dbData.docs.map(this.dbDataToItem));
+    return Promise.all(dbData.docs.map(doc => {
+      return this.dbDataToItem(doc, container.id!);
+    }));
   }
 
   async getContainerItemsCount(container: Container): Promise<number> {
@@ -189,7 +191,7 @@ export default class FirebaseDAO implements DAO {
     return this.app.auth().createUserWithEmailAndPassword(email, password);
   }
 
-  dbDataToItem(data: QueryDocumentSnapshot | DocumentSnapshot): Item {
+  dbDataToItem(data: QueryDocumentSnapshot | DocumentSnapshot, container: string): Item {
     const doc = data.data()!;
     return new Item(
       doc.name,
@@ -197,7 +199,7 @@ export default class FirebaseDAO implements DAO {
       doc.laundryCategory,
       doc.packingCategory,
       doc.subcategory,
-      doc.idContainer,
+      container,
       data.id
     )
   }

@@ -18,5 +18,5 @@ export default interface DAO {
   moveItem(item: Item, to: Container): any;
   deleteItem(item: Item): any;
 
-  dbDataToItem(data: any): Item;
+  dbDataToItem(data: any, container: string): Item;
 }
