@@ -9,25 +9,6 @@ export default class DashboardComponent extends Vue {
     return this.$store.state.containers.list;
   }
 
-  get defaultContainer() {
-    let defaultContainer = this.containers.filter((el: Container) => el.type == ContainerType.Default);
-    if(defaultContainer.length) {
-
-      if(
-        this.$route.name != 'container'
-        && this.$route.name != 'item'
-        && this.$route.name != 'item-add'
-      ) {
-        this.$router.replace(this.getUrl(defaultContainer.pop()!));
-        return;
-      }
-
-      return defaultContainer.pop()!.id;
-    }
-
-    return null;
-  }
-
   get dirtyCount() {
     return this.$store.state.containers.dirtyCount;
   }

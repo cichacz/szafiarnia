@@ -1,20 +1,31 @@
+import ItemCardComponent from "@/components/item-card/ItemCard.vue";
 import Container, {ContainerType} from "@/models/Container";
-import Item from "@/models/Item";
+import Item, {PackingCategory} from "@/models/Item";
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import {Prop, Watch} from "vue-property-decorator";
-import swal from 'sweetalert';
 
-@Component
+@Component({
+  components: {
+    'item-card': ItemCardComponent
+  }
+})
 export default class ContainerComponent extends Vue {
   @Prop()
   id: string;
 
+  container: Container | undefined;
   items: Item[] = [];
   ready: boolean = false;
   busyTimeout: any;
 
-  mounted() {
+  created() {
+    this.$store.watch(this.$store.getters.containers, () => {
+      if(!this.container) {
+        this.loadContainerData(this.id);
+      }
+    });
+
     this.loadContainerData(this.id);
   }
 
@@ -29,71 +40,26 @@ export default class ContainerComponent extends Vue {
     this.loadContainerData(id);
   }
 
-  get isClean() {
-    return this.$store.state.containers.list
-      .find((el: Container) => el.id == this.id && el.type != ContainerType.Dirty)
-  }
-
-  async loadContainerData(id: string) {
-    const container = await this.$dao.getContainerById(id);
-    if (container) {
-      this.$dao.getContainerItems(container).then(data => {
+  loadContainerData(id: string) {
+    this.container = this.$store.state.containers.list.find((el: Container) => el.id == id);
+    if (this.container) {
+      this.$dao.getContainerItems(this.container).then(data => {
         clearTimeout(this.busyTimeout);
         this.ready = true;
 
         if (data) {
           this.items = data;
+
+          if(this.container && this.container.type == ContainerType.Dirty) {
+            this.$store.commit('setDirtyCount', this.items.length);
+          }
         }
       });
     }
   }
 
-  setAsDirty(item: Item) {
-    const container = this.$store.state.containers.list.find((el: Container) => el.type == ContainerType.Dirty);
-
-    if (container) {
-      this.changeItemContainer(item, container);
-    }
-  }
-
-  setAsClean(item: Item) {
-    const container = this.$store.state.containers.list.find((el: Container) => el.type == ContainerType.Default);
-
-    if (container) {
-      this.changeItemContainer(item, container);
-    }
-  }
-
-  deleteItem(item: Item) {
-    swal({
-      title: "Jesteś pewien?",
-      text: "Na pewno chcesz usunąć ten przedmiot?",
-      icon: "warning",
-      dangerMode: true,
-      buttons: {
-        cancel: true,
-        confirm: true,
-      },
-    })
-      .then((willDelete: boolean) => {
-        if (willDelete) {
-          this.$dao.deleteItem(item).then(() => {
-            let idx = this.items.findIndex((x: Item) => x.id == item.id);
-            this.items.splice(idx, 1);
-            if(!this.isClean) {
-              this.$store.commit('modifyDirtyCount', -1);
-            }
-            swal("Zrobione!", "Przedmiot został usunięty!", "success");
-          });
-        }
-      });
-  }
-
-  private changeItemContainer(item: Item, container: Container) {
-    this.$dao.moveItem(item, container).then((item: Item) => {
-      let idx = this.items.findIndex((x: Item) => x.id == item.id);
-      this.items.splice(idx, 1);
-      this.$store.commit('modifyDirtyCount', container.type == ContainerType.Dirty ? 1 : -1);
-    });
+  removeItem(item: Item) {
+    let idx = this.items.findIndex((x: Item) => x.id == item.id);
+    this.items.splice(idx, 1);
   }
 }

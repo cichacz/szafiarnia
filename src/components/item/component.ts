@@ -1,10 +1,8 @@
+import Container, {ContainerType} from "@/models/Container";
 import Item, {ColourGroup, LaundryCategory, PackingCategory} from "@/models/Item";
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import {Prop} from "vue-property-decorator";
-import Container, {ContainerType} from "../../models/Container";
-import * as firebase from "firebase";
-import DocumentReference = firebase.firestore.DocumentReference;
 
 @Component
 export default class ItemComponent extends Vue {
@@ -16,6 +14,8 @@ export default class ItemComponent extends Vue {
 
   @Prop()
   saved: string;
+
+  updated: boolean = false;
 
   get formTitle() {
     return this.currentItem.name.length ? this.currentItem.name : 'Dodaj nowy przedmiot';
@@ -48,6 +48,8 @@ export default class ItemComponent extends Vue {
     this.$dao.saveItem(this.currentItem).then((doc: any) => {
       if(doc) {
         this.$router.push({name: 'item', params: {id: doc.id, saved: "1"}});
+      } else {
+        this.updated = true;
       }
     });
   }

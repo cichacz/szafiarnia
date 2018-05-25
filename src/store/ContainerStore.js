@@ -5,6 +5,9 @@ export default {
     list: [],
     dirtyCount: 0,
   },
+  getters: {
+    containers: state => () => state.list,
+  },
   mutations: {
     setList(state, list) {
       state.list = list;

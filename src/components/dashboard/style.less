@@ -1,4 +1,5 @@
 @import "~@/assets/less/colors";
+@import "~@/assets/less/variables";
 
 .dashboard-body {
   min-height: 100vh;
@@ -20,4 +21,11 @@
   -ms-transform: translate(-30%, -30%);
   -o-transform: translate(-30%, -30%);
   transform: translate(-30%, -30%);
+}
+
+@media screen and (min-width: @mobileWidth+1) {
+  .logout-btn {
+    position: absolute;
+    right: 10px;
+  }
 }

@@ -13,10 +13,7 @@
                         </router-link>
                     </li>
                 </ul>
-                <router-link v-if="defaultContainer" :to="{name: 'item-add'}" class="btn btn-outline-light">
-                    <i class="fa fa-plus fa-fw"></i>
-                </router-link>
-                <a href="#" @click.prevent="logout" class="btn btn-outline-danger"><i class="fa fa-times"></i></a>
+                <a href="#" @click.prevent="logout" class="btn btn-outline-light logout-btn"><i class="fa fa-times"></i> Wyloguj</a>
             </div>
         </nav>
         <div class="container-fluid">

@@ -3,7 +3,7 @@
         <div class="col-sm-8">
             <div class="content clearfix">
                 <h3><ribbon>{{ formTitle }}</ribbon></h3>
-                <div v-if="saved" class="alert alert-success" role="alert">
+                <div v-if="saved || updated" class="alert alert-success" role="alert">
                     Poprawnie zapisano
                 </div>
                 <div v-if="error" class="alert alert-warning" role="alert">

@@ -4,6 +4,7 @@ import Item from "@/models/Item";
 import * as firebase from "firebase";
 import Vue from 'vue'
 import DocumentReference = firebase.firestore.DocumentReference;
+import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 import QueryDocumentSnapshot = firebase.firestore.QueryDocumentSnapshot;
 
 require('firebase/firestore');
@@ -77,17 +78,7 @@ export default class FirebaseDAO implements DAO {
 
     const itemRef = await this.db.collection("containers/" + container + "/items").doc(id).get();
     if(itemRef.exists) {
-      const data = itemRef.data()!;
-      return new Item(
-        data.name,
-        data.colourGroup,
-        data.laundryCategory,
-        data.packingCategory,
-        data.subcategory,
-        data.idContainer,
-        data.isDirty,
-        itemRef.id
-      );
+      return this.dbDataToItem(itemRef);
     }
   }
 
@@ -102,8 +93,7 @@ export default class FirebaseDAO implements DAO {
       laundryCategory: item.laundryCategory,
       packingCategory: item.packingCategory,
       subcategory: item.subcategory || null,
-      idContainer: item.idContainer,
-      dirty: item.isDirty(),
+      idContainer: item.idContainer
     };
 
     if(item.id) {
@@ -182,19 +172,7 @@ export default class FirebaseDAO implements DAO {
 
     let dbData = await this.db.collection("containers/" + container.id + "/items").get();
 
-    return Promise.all(dbData.docs.map((data: QueryDocumentSnapshot) => {
-      const doc = data.data();
-      return new Item(
-        doc.name,
-        doc.colourGroup,
-        doc.laundryCategory,
-        doc.packingCategory,
-        doc.subcategory,
-        doc.idContainer,
-        doc.dirty,
-        data.id
-      );
-    }));
+    return Promise.all(dbData.docs.map(this.dbDataToItem));
   }
 
   async getContainerItemsCount(container: Container): Promise<number> {
@@ -209,5 +187,18 @@ export default class FirebaseDAO implements DAO {
 
   async register(email: string, password: string) {
     return this.app.auth().createUserWithEmailAndPassword(email, password);
+  }
+
+  dbDataToItem(data: QueryDocumentSnapshot | DocumentSnapshot): Item {
+    const doc = data.data()!;
+    return new Item(
+      doc.name,
+      doc.colourGroup,
+      doc.laundryCategory,
+      doc.packingCategory,
+      doc.subcategory,
+      doc.idContainer,
+      data.id
+    )
   }
 }

@@ -17,4 +17,6 @@ export default interface DAO {
   getContainerItemsCount(container: Container): any;
   moveItem(item: Item, to: Container): any;
   deleteItem(item: Item): any;
+
+  dbDataToItem(data: any): Item;
 }

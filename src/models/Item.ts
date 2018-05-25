@@ -17,7 +17,6 @@ export default class Item {
     packingCategory?: PackingCategory,
     subcategory?: string,
     idContainer?: string,
-    isDirty: boolean = false,
     id?: string
   ) {
     this.id = id;
@@ -27,17 +26,7 @@ export default class Item {
     this.packingCategory = packingCategory;
     this.subcategory = subcategory;
     this.idContainer = idContainer;
-    this.dirty = isDirty;
   }
-
-  public setAsDirty() {
-    this.dirty = true;
-  }
-
-  public isDirty(): boolean {
-    return this.dirty;
-  }
-
 }
 
 export enum ColourGroup {

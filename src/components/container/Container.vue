@@ -22,21 +22,18 @@
                 </div>
             </div>
         </transition>
+        <div class="row justify-content-center">
+            <div v-if="ready" class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card shadow p-1">
+                    <router-link :to="{name: 'item-add'}" class="btn btn-block btn-outline-primary">
+                        <i class="fa fa-plus fa-fw fa-huge"></i> Dodaj przedmiot
+                    </router-link>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div v-for="item in items" :key="item.id" class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card shadow mt-4">
-                    <img class="card-img-top" src="http://place-hold.it/400x300" :alt="item.name">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ item.name }}</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" v-if="isClean" @click.prevent="setAsDirty(item)" class="card-link">Przenieś do prania</a>
-                        <a href="#" v-if="!isClean" @click.prevent="setAsClean(item)" class="card-link">Oznacz jako wyprane</a>
-                        <router-link :to="{name: 'item', params: {id: item.id, container: id}}" class="card-link">
-                            Edytuj
-                        </router-link>
-                        <a href="#" @click.prevent="deleteItem(item)" class="card-link text-danger">Usuń</a>
-                    </div>
-                </div>
+                <item-card :item="item" :container="container" @item-remove="removeItem($event)"></item-card>
             </div>
         </div>
     </div>
