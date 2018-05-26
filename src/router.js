@@ -6,7 +6,7 @@ import LoginComponent from '@/components/login/Login';
 import RegisterComponent from '@/components/register/Register';
 import ItemComponent from '@/components/item/Item';
 import ContainerComponent from '@/components/container/Container';
-
+import PackingComponent from '@/components/Packing/Packing';
 Vue.use(Router);
 
 const router = new Router({
@@ -33,6 +33,12 @@ const router = new Router({
           name: 'item-add',
           path: 'new-item',
           component: ItemComponent,
+          props: true,
+        },
+        {
+          name: 'item-pack',
+          path: 'pack',
+          component: PackingComponent,
           props: true,
         },
         {

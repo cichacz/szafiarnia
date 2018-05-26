@@ -28,6 +28,9 @@
                     <router-link :to="{name: 'item-add'}" class="btn btn-block btn-outline-primary">
                         <i class="fa fa-plus fa-fw fa-huge"></i> Dodaj przedmiot
                     </router-link>
+                    <router-link :to="{name: 'item-pack'}" class="btn btn-block btn-outline-info">
+                        <i class="fa fa-plus fa-fw fa-huge"></i> Spakuj się
+                    </router-link>
                 </div>
             </div>
         </div>
