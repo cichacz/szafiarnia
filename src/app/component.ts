@@ -3,6 +3,7 @@ import '@/modules/dao'
 import 'bootstrap'
 import 'vee-validate'
 import Vue from 'vue'
+import VueI18n from 'vue-i18n';
 import Component from 'vue-class-component'
 import 'vuex'
 

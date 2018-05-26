@@ -1,4 +1,4 @@
-import {ContainerType} from '@/models/Container';
+import { ContainerType } from '@/models/Container';
 
 export default {
   state: {
