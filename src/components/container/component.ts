@@ -34,7 +34,7 @@ export default class ContainerComponent extends Vue {
     clearTimeout(this.busyTimeout);
     this.busyTimeout = setTimeout(() => {
       this.ready = false;
-    }, 150);
+    }, 500);
 
     this.items = [];
     this.loadContainerData(id);

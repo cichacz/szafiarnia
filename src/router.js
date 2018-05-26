@@ -6,7 +6,8 @@ import LoginComponent from '@/components/login/Login';
 import RegisterComponent from '@/components/register/Register';
 import ItemComponent from '@/components/item/Item';
 import ContainerComponent from '@/components/container/Container';
-import PackingComponent from '@/components/Packing/Packing';
+import PackingComponent from '@/components/packing/Packing';
+
 Vue.use(Router);
 
 const router = new Router({

@@ -38,17 +38,18 @@ body {
 .sk-cube-grid {
   width: 40px;
   height: 40px;
-  margin: 50px auto;
+  margin: 0 auto;
+
+  .sk-cube {
+    width: 33%;
+    height: 33%;
+    background-color: @primary;
+    float: left;
+    -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+    animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+  }
 }
 
-.sk-cube-grid .sk-cube {
-  width: 33%;
-  height: 33%;
-  background-color: @primary;
-  float: left;
-  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
-  animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
-}
 .sk-cube-grid .sk-cube1 {
   -webkit-animation-delay: 0.2s;
   animation-delay: 0.2s; }

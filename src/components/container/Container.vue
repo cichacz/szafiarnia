@@ -2,7 +2,7 @@
     <div class="mb-4">
         <transition name="slide-from-top">
             <div v-if="!ready" class="position-absolute w-100 preloader">
-                <div class="d-flex justify-content-center">
+                <div class="row justify-content-center">
                     <div class="col-sm-10 col-md-9 col-lg-6">
                         <div class="text-center content">
                             <h3>Trwa ładowanie elementów</h3>
@@ -22,23 +22,25 @@
                 </div>
             </div>
         </transition>
-        <div class="row justify-content-center">
-            <div v-if="ready" class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card shadow p-1">
-                    <router-link :to="{name: 'item-add'}" class="btn btn-block btn-outline-primary">
-                        <i class="fa fa-plus fa-fw fa-huge"></i> Dodaj przedmiot
-                    </router-link>
-                    <router-link :to="{name: 'item-pack'}" class="btn btn-block btn-outline-info">
-                        <i class="fa fa-plus fa-fw fa-huge"></i> Spakuj się
-                    </router-link>
+        <transition name="slide-from-top">
+            <div v-if="ready" class="row justify-content-center">
+                <div class="col-sm-8 col-md-6 col-lg-5">
+                    <div class="text-center content">
+                        <router-link :to="{name: 'item-add'}" class="btn btn-outline-primary d-block text-left d-sm-inline-block mb-3 mb-sm-auto">
+                            <i class="fa fa-plus fa-fw"></i> Dodaj przedmiot
+                        </router-link>
+                        <router-link :to="{name: 'item-pack'}" class="btn btn-outline-info d-block text-left d-sm-inline-block">
+                            <i class="fa fa-suitcase fa-fw"></i> Spakuj się
+                        </router-link>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
+        </transition>
+        <transition-group name="pop-in" tag="div" class="row">
             <div v-for="item in items" :key="item.id" class="col-sm-6 col-md-4 col-lg-3">
                 <item-card :item="item" :container="container" @item-remove="removeItem($event)"></item-card>
             </div>
-        </div>
+        </transition-group>
     </div>
 </template>
 
