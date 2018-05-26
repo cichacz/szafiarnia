@@ -3,6 +3,11 @@ import Item, {ColourGroup, LaundryCategory, PackingCategory} from "@/models/Item
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import {Prop} from "vue-property-decorator";
+import BootstrapVue from 'bootstrap-vue'
+Vue.use(BootstrapVue);
+
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 @Component
 export default class ItemComponent extends Vue {
