@@ -6,6 +6,7 @@ import Vue from 'vue'
 import DocumentReference = firebase.firestore.DocumentReference;
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 import QueryDocumentSnapshot = firebase.firestore.QueryDocumentSnapshot;
+import {PackingCategory} from "../models/Item";
 
 require('firebase/firestore');
 
@@ -87,13 +88,19 @@ export default class FirebaseDAO implements DAO {
       throw new Error('Not logged in');
     }
 
+    let url;
+    if(item.image instanceof File) {
+      url = await this.saveImage(item.image);
+    }
+
     const data = {
       name: item.name,
       colourGroup: item.colourGroup,
       laundryCategory: item.laundryCategory,
       packingCategory: item.packingCategory,
       subcategory: item.subcategory || null,
-      idContainer: item.idContainer
+      idContainer: item.idContainer,
+      image: url
     };
 
     if(item.id) {
@@ -177,6 +184,19 @@ export default class FirebaseDAO implements DAO {
     }));
   }
 
+  async getContainerItemsOfPackingCategory(container: Container, type: PackingCategory): Promise<Item[]> {
+    if (!this.user) {
+      throw new Error('Not logged in');
+    }
+
+    let dbData = await this.db.collection("containers/" + container.id + "/items")
+      .where('packingCategory', '==', type).get();
+
+    return Promise.all(dbData.docs.map(doc => {
+      return this.dbDataToItem(doc, container.id!);
+    }));
+  }
+
   async getContainerItemsCount(container: Container): Promise<number> {
     if (!this.user) {
       throw new Error('Not logged in');
@@ -191,6 +211,27 @@ export default class FirebaseDAO implements DAO {
     return this.app.auth().createUserWithEmailAndPassword(email, password);
   }
 
+  async saveImage(file: File): Promise<string|undefined> {
+    if (!this.user) {
+      throw new Error('Not logged in');
+    }
+
+    const metadata = {
+      'contentType': file.type
+    };
+
+    const storageRef = this.app.storage().ref();
+
+    let snapshot = await storageRef.child('images/' + file.name).put(file, metadata);
+
+    if(snapshot) {
+      // Let's get a download URL for the file.
+      return snapshot.ref.getDownloadURL();
+    }
+
+    return undefined;
+  }
+
   dbDataToItem(data: QueryDocumentSnapshot | DocumentSnapshot, container: string): Item {
     const doc = data.data()!;
     return new Item(
@@ -200,6 +241,7 @@ export default class FirebaseDAO implements DAO {
       doc.packingCategory,
       doc.subcategory,
       container,
+      doc.image,
       data.id
     )
   }

@@ -1,5 +1,6 @@
 import Container from "@/models/Container";
 import Item from "@/models/Item";
+import {PackingCategory} from "../models/Item";
 
 export default interface DAO {
   getUser(): any;
@@ -19,4 +20,7 @@ export default interface DAO {
   deleteItem(item: Item): any;
 
   dbDataToItem(data: any, container: string): Item;
+
+  getContainerItemsOfPackingCategory(container: Container, type: PackingCategory): any;
+  saveImage(file: File): any;
 }

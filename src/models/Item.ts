@@ -6,7 +6,7 @@ export default class Item {
   laundryCategory: LaundryCategory | undefined;
   packingCategory: PackingCategory | undefined;
   subcategory: string | undefined;
-  //brakuje dodawania, usuwania i wyświetlania zdjęć https://alligator.io/vuejs/uploading-vue-picture-input/
+  image: File | string | undefined;
 
   private dirty: boolean;
 
@@ -17,6 +17,7 @@ export default class Item {
     packingCategory?: PackingCategory,
     subcategory?: string,
     idContainer?: string,
+    image?: string,
     id?: string
   ) {
     this.id = id;
@@ -26,6 +27,7 @@ export default class Item {
     this.packingCategory = packingCategory;
     this.subcategory = subcategory;
     this.idContainer = idContainer;
+    this.image = image;
   }
 }
 

@@ -52,12 +52,14 @@
                         <label for="subcategory">Własna kategoria</label>
                         <input v-model="currentItem.subcategory"  id="subcategory" class="form-control" placeholder="Nazwa kategorii">
                     </div>
-                    <div>   
-                        <div class="form-group"> 
-                            <b-form-file v-model="file" :state="Boolean(file)" placeholder="Wybierz zdjęcie"></b-form-file>                     
+                    <div>
+                        <div class="form-group">
+                            <b-form-file v-model="currentItem.image" :state="Boolean(currentItem.image)" placeholder="Wybierz zdjęcie"></b-form-file>
                         </div>
-                        <button v-if="!id" class="btn btn-success">Dodaj</button>
-                        <button v-if="id" class="btn btn-success">Zapisz zmiany</button>
+                        <button ref="saveBtn" class="btn btn-success">
+                            <template v-if="!id">Dodaj</template>
+                            <template v-else>Zapisz zmiany</template>
+                        </button>
                         <button @click.prevent="cancel" class="btn btn-secondary">Anuluj</button>
                     </div>
                 </form>
