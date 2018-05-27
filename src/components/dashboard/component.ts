@@ -1,6 +1,7 @@
 import Container, {ContainerType} from '@/models/Container'
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import {Watch} from "vue-property-decorator";
 import 'vue-router'
 
 @Component
@@ -11,6 +12,15 @@ export default class DashboardComponent extends Vue {
 
   get dirtyCount() {
     return this.$store.state.containers.dirtyCount;
+  }
+
+  @Watch('containers')
+  onContainersChange(containers: Container[]) {
+    //preselect default container
+    let defaultContainer = containers.filter((el: Container) => el.type == ContainerType.Default);
+    if(defaultContainer.length && this.$route.name == 'panel') {
+      this.$router.replace(this.getUrl(defaultContainer.pop()!))
+    }
   }
 
   async created() {
