@@ -25,6 +25,7 @@ export default class ItemComponent extends Vue {
   saved: string;
 
   updated: boolean = false;
+  loading: boolean = true;
 
   get formTitle() {
     return this.currentItem.name.length ? this.currentItem.name : 'Dodaj nowy przedmiot';
@@ -39,14 +40,26 @@ export default class ItemComponent extends Vue {
 
   async created() {
     if(this.id) {
+      this.loading = true;
       const doc = await this.$dao.getItemById(this.id, this.container);
       if(doc) {
         this.currentItem = doc;
       }
     }
+    this.loading = false;
   }
 
   addItem() {
+    this.$validator.validateAll().then((result: any) => {
+      if(result) {
+        this._addItem();
+      }
+    }).catch(() => {
+      return false
+    });
+  }
+
+  _addItem() {
     let l: LaddaButton | null = null;
     const btn = this.$refs.saveBtn;
     if(btn instanceof HTMLButtonElement) {
@@ -76,7 +89,28 @@ export default class ItemComponent extends Vue {
     });
   }
 
+  previewImage(input: HTMLInputElement) {
+    // Ensure that you have a file before attempting to read it
+    if (input.files && input.files[0]) {
+      // create a new FileReader to read this image and convert to base64 format
+      const reader = new FileReader();
+      // Define a callback function to run, when FileReader finishes its job
+      reader.onload = (e: any) => {
+        this.currentItem.image = e.target.result!;
+      };
+      // Start the reader job - read file as a data url (base64 format)
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  getUrl(container: Container) {
+    return { name: 'container', params: { id: container.id! }}
+  }
+
   cancel() {
-    this.$router.go(-1);
+    let defaultContainer = this.$store.state.containers.list.filter((el: Container) => el.type == ContainerType.Default);
+    if(defaultContainer.length) {
+      this.$router.replace(this.getUrl(defaultContainer.pop()!));
+    }
   }
 }

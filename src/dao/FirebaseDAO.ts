@@ -88,7 +88,7 @@ export default class FirebaseDAO implements DAO {
       throw new Error('Not logged in');
     }
 
-    let url;
+    let url = item.image;
     if(item.image instanceof File) {
       url = await this.saveImage(item.image);
     }

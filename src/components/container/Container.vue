@@ -1,7 +1,7 @@
 <template>
     <div class="mb-4">
         <transition name="slide-from-top">
-            <div v-if="!ready" class="position-absolute w-100 preloader">
+            <div v-if="!ready" key="loading" class="position-absolute w-100 preloader">
                 <div class="row justify-content-center">
                     <div class="col-sm-10 col-md-9 col-lg-6">
                         <div class="text-center content">
@@ -21,9 +21,7 @@
                     </div>
                 </div>
             </div>
-        </transition>
-        <transition name="slide-from-top">
-            <div v-if="ready" class="row justify-content-center">
+            <div v-else key="ready" class="row justify-content-center">
                 <div class="col-sm-8 col-md-6 col-lg-5">
                     <div class="text-center content">
                         <router-link :to="{name: 'item-add'}" class="btn btn-outline-primary d-block text-left d-sm-inline-block mb-3 mb-sm-auto">
@@ -36,10 +34,8 @@
                 </div>
             </div>
         </transition>
-        <transition-group name="pop-in" tag="div" class="row">
-            <div v-for="item in items" :key="item.id" class="col-sm-6 col-md-4 col-lg-3">
-                <item-card :item="item" :container="container" @item-remove="removeItem($event)"></item-card>
-            </div>
+        <transition-group name="pop-in" tag="div" class="card-columns">
+            <item-card v-for="item in items" :key="item.id" :item="item" :container="container" @item-remove="removeItem($event)"></item-card>
         </transition-group>
     </div>
 </template>

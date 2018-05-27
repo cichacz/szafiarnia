@@ -1,6 +1,6 @@
 <template>
     <div class="card shadow mt-4">
-        <img class="card-img-top" src="http://place-hold.it/400x300" :alt="item.name">
+        <img class="card-img-top" :src="item.image" :alt="item.name">
         <div class="card-body">
             <h5 class="card-title">{{ item.name }}</h5>
             <p class="card-text" v-html="categoryDisplay()"></p>
