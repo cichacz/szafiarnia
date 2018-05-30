@@ -15,4 +15,4 @@ Aplikacja do zarządzania zawartością szafy
 
 Dostęp do aplikacji  
 ------------------------------------------
-Działającą aplikację można znaleźć pod adresem https://szafiarnia-d3f21.firebaseapp.com
+Działającą aplikację można znaleźć pod adresem: <https://szafiarnia-d3f21.firebaseapp.com>
