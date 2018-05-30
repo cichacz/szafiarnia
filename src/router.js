@@ -72,7 +72,7 @@ router.onError((e) => {
 });
 
 router.beforeEach((to, from, next) => {
-  this.a.app.$dao.getUser().then((currentUser) => {
+  router.app.$dao.getUser().then((currentUser) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
     if (requiresAuth && !currentUser) next({ name: 'login' });
     else if (currentUser && (to.path === '/login' || to.path === '/register')) next({ name: 'panel' });

@@ -1,3 +1,8 @@
+/* styles !IMPORTANT! must be on top of everything */
+import 'bootstrap/dist/css/bootstrap-grid.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'font-awesome/css/font-awesome.css';
+
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';

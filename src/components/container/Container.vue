@@ -2,7 +2,7 @@
     <div class="mb-4">
         <transition name="slide-from-top">
             <div v-if="!ready" key="loading" class="position-absolute w-100 preloader">
-                <div class="row justify-content-center">
+                <div class="d-flex justify-content-center">
                     <div class="col-sm-10 col-md-9 col-lg-6">
                         <div class="text-center content">
                             <h3>Trwa ładowanie elementów</h3>
