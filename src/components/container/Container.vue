@@ -30,6 +30,12 @@
                         <router-link :to="{name: 'item-pack'}" class="btn btn-outline-info d-block text-left d-sm-inline-block">
                             <i class="fa fa-suitcase fa-fw"></i> Spakuj się
                         </router-link>
+                        <div v-if="container.type == 2" v-on:click="changeContainerTo(1)" class="btn btn-outline-info d-block text-left d-sm-inline-block">
+                            Rozpakuj się
+                        </div>
+                        <div v-if="container.type == 1" v-on:click="changeContainerTo(0)" class="btn btn-outline-info d-block text-left d-sm-inline-block">
+                            Zrób pranie
+                        </div>
                     </div>
                 </div>
             </div>

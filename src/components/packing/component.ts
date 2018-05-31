@@ -63,6 +63,7 @@ export default class PackingComponent extends Vue {
           var i;
           for (i = 0; i < (numberToPack > filtered.length ? filtered.length : numberToPack); i++) { 
             this.packed.push(filtered[i]);
+            this.items.splice(this.items.indexOf(filtered[i]),1);
           } 
         }
     }

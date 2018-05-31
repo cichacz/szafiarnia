@@ -62,4 +62,12 @@ export default class ContainerComponent extends Vue {
     let idx = this.items.findIndex((x: Item) => x.id == item.id);
     this.items.splice(idx, 1);
   }
+
+  changeContainerTo(type: number) {
+    const target = this.$store.state.containers.list.find((el: Container) => el.type == type);
+    this.items.forEach(item => {
+      this.$dao.moveItem(item, target);
+    });
+    this.$router.push({name: 'panel'});
+  }
 }
