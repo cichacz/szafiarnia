@@ -93,10 +93,6 @@ export default class PackingComponent extends Vue {
       || category == PackingCategory.Jacket) {
         return 0.1;
     }
-    if(category == PackingCategory.Accessories
-        || category == PackingCategory.Other) {
-          return 0;
-    }
     return 0;
   }
 
