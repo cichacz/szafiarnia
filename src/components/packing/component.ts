@@ -28,11 +28,6 @@ export default class PackingComponent extends Vue {
   outsideClothes = [PackingCategory.Jacket];
   shoesAndOthers = [PackingCategory.Shoes, PackingCategory.Accessories, PackingCategory.Other];
 
-  defaultMultiplier = {
-    
-
-  };
-
   created() {
     this.$store.watch(this.$store.getters.containers, () => {
       if(!this.container) {
@@ -117,7 +112,7 @@ export default class PackingComponent extends Vue {
     }
     if(category == PackingCategory.Accessories
         || category == PackingCategory.Other) {
-          return 0.2;
+          return 0;
     }
     return 0;
   }
