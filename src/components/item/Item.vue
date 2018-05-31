@@ -29,9 +29,9 @@
                     <form novalidate @submit.prevent="addItem">
                         <div class="row">
                             <div class="col-md-5">
-                                <label class="input-file-wrapper" :class="{'has-image': currentItem.image}" title="Wybierz zdjęcie">
-                                    <img :src="currentItem.image" class="img-fluid"/>
-                                    <input type="file" name="image" accept="image/*" @change="previewImage($event.target)"/>
+                                <label class="input-file-wrapper" :class="{'has-image': imagePreview}" title="Wybierz zdjęcie">
+                                    <img :src="imagePreview" class="img-fluid"/>
+                                    <input type="file" name="image" accept="image/*" @change="setImage($event.target)"/>
                                 </label>
                             </div>
                             <div class="col-md-7">
