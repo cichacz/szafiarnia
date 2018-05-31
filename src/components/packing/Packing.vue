@@ -77,7 +77,7 @@
                         </ul>
                     </b-tab>
                     <b-tab title="Koniec">
-                        <b-button>Zatwierdź wybór i przejdź do spakowanych rzeczy</b-button>
+                        <b-button v-on:click="finishPacking()">Zatwierdź wybór i przejdź do spakowanych rzeczy</b-button>
                         <b-button>Porzuć kreator</b-button>
                     </b-tab>
                 </b-tabs>

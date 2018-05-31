@@ -121,4 +121,12 @@ export default class PackingComponent extends Vue {
     }
     return 0;
   }
+
+  finishPacking() {
+    const travelContainer = this.$store.state.containers.list.find((el: Container) => el.type == 2);
+    this.packed.forEach(item => {
+      this.$dao.moveItem(item, travelContainer);
+    })
+    this.$router.push({name: 'panel'});
+  }
 }
