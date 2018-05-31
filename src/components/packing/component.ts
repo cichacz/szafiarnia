@@ -42,6 +42,7 @@ export default class PackingComponent extends Vue {
         this.ready = true;
         if (data) {
           this.items = data;
+          this.chooseDefault;
           if(this.container && this.container.type == ContainerType.Dirty) {
             this.$store.commit('setDirtyCount', this.items.length);
           }
