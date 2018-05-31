@@ -38,7 +38,7 @@ const router = new Router({
         },
         {
           name: 'item-pack',
-          path: 'pack/:id',
+          path: 'pack',
           component: PackingComponent,
           props: true,
         },

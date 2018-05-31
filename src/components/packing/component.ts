@@ -13,9 +13,6 @@ import {Prop, Watch} from "vue-property-decorator";
 @Component
 export default class PackingComponent extends Vue {
   
-
-  @Prop()
-  id: string;
   container: Container | undefined;
   items: Item[] = [];
   packed: Item[] = [];
@@ -29,23 +26,7 @@ export default class PackingComponent extends Vue {
   shoesAndOthers = [PackingCategory.Shoes, PackingCategory.Accessories, PackingCategory.Other];
 
   created() {
-    this.$store.watch(this.$store.getters.containers, () => {
-      if(!this.container) {
-        this.loadContainerData(this.id);
-      }
-    });
-    this.loadContainerData(this.id);
-  }
-
-  @Watch('id')
-  onIdChange(id: string) {
-    clearTimeout(this.busyTimeout);
-    this.busyTimeout = setTimeout(() => {
-      this.ready = false;
-    }, 500);
-
-    this.items = [];
-    this.loadContainerData(id);
+    this.loadContainerData();
   }
 
   @Watch('tripLength')
@@ -53,8 +34,8 @@ export default class PackingComponent extends Vue {
     this.chooseDefault();
   }
 
-  loadContainerData(id: string) {
-    this.container = this.$store.state.containers.list.find((el: Container) => el.id == id);
+  loadContainerData() {
+    this.container = this.$store.state.containers.list.find((el: Container) => el.type == 0);
     if (this.container) {
       this.$dao.getContainerItems(this.container).then(data => {
         clearTimeout(this.busyTimeout);
