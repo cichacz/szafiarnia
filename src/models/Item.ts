@@ -6,7 +6,7 @@ export default class Item {
   laundryCategory: LaundryCategory | undefined;
   packingCategory: PackingCategory | undefined;
   subcategory: string | undefined;
-  image: File | string | undefined;
+  image: File | string | null;
 
   private dirty: boolean;
 
@@ -27,7 +27,7 @@ export default class Item {
     this.packingCategory = packingCategory;
     this.subcategory = subcategory;
     this.idContainer = idContainer;
-    this.image = image;
+    this.image = image || null;
   }
 }
 

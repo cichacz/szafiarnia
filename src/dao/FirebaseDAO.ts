@@ -88,9 +88,9 @@ export default class FirebaseDAO implements DAO {
       throw new Error('Not logged in');
     }
 
-    let url = item.image;
-    if(item.image instanceof File) {
-      url = await this.saveImage(item.image);
+    let image = item.image;
+    if(image instanceof File) {
+      image = await this.saveImage(image);
     }
 
     const data = {
@@ -100,7 +100,7 @@ export default class FirebaseDAO implements DAO {
       packingCategory: item.packingCategory,
       subcategory: item.subcategory || null,
       idContainer: item.idContainer,
-      image: url
+      image: image
     };
 
     if(item.id) {
@@ -211,7 +211,7 @@ export default class FirebaseDAO implements DAO {
     return this.app.auth().createUserWithEmailAndPassword(email, password);
   }
 
-  async saveImage(file: File): Promise<string|undefined> {
+  async saveImage(file: File): Promise<string|null> {
     if (!this.user) {
       throw new Error('Not logged in');
     }
@@ -229,7 +229,7 @@ export default class FirebaseDAO implements DAO {
       return snapshot.ref.getDownloadURL();
     }
 
-    return undefined;
+    return null;
   }
 
   dbDataToItem(data: QueryDocumentSnapshot | DocumentSnapshot, container: string): Item {

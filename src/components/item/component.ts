@@ -2,7 +2,7 @@ import Container, {ContainerType} from "@/models/Container";
 import Item, {ColourGroup, LaundryCategory, PackingCategory} from "@/models/Item";
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import {Prop} from "vue-property-decorator";
+import {Prop, Watch} from "vue-property-decorator";
 import BootstrapVue from 'bootstrap-vue';
 import * as Ladda from 'ladda';
 import {LaddaButton} from "ladda";
@@ -24,19 +24,20 @@ export default class ItemComponent extends Vue {
   @Prop()
   saved: string;
 
-  updated: boolean = false;
-  loading: boolean = true;
-
-  get formTitle() {
-    return this.currentItem.name.length ? this.currentItem.name : 'Dodaj nowy przedmiot';
-  }
-
   public currentItem: Item = new Item('');
   public error: string = '';
 
   public colorGroup = ColourGroup;
   public laundryCategory = LaundryCategory;
   public packingCategory = PackingCategory;
+
+  updated: boolean = false;
+  loading: boolean = true;
+  imagePreview: string | File | null = this.currentItem.image;
+
+  get formTitle() {
+    return this.currentItem.name.length ? this.currentItem.name : 'Dodaj nowy przedmiot';
+  }
 
   async created() {
     if(this.id) {
@@ -82,24 +83,27 @@ export default class ItemComponent extends Vue {
       }
 
       if(doc) {
-        this.$router.push({name: 'item', params: {id: doc.id, saved: "1"}});
+        this.$router.push({name: 'item', params: {id: doc.id, container: this.currentItem.idContainer!, saved: "1"}});
       } else {
         this.updated = true;
       }
     });
   }
 
-  previewImage(input: HTMLInputElement) {
+  setImage(input: HTMLInputElement) {
     // Ensure that you have a file before attempting to read it
     if (input.files && input.files[0]) {
       // create a new FileReader to read this image and convert to base64 format
       const reader = new FileReader();
       // Define a callback function to run, when FileReader finishes its job
       reader.onload = (e: any) => {
-        this.currentItem.image = e.target.result!;
+        this.imagePreview = e.target.result!;
       };
       // Start the reader job - read file as a data url (base64 format)
       reader.readAsDataURL(input.files[0]);
+
+      //save file input to model
+      this.currentItem.image = input.files[0];
     }
   }
 
