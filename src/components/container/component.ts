@@ -61,6 +61,10 @@ export default class ContainerComponent extends Vue {
   removeItem(item: Item) {
     let idx = this.items.findIndex((x: Item) => x.id == item.id);
     this.items.splice(idx, 1);
+
+    if(this.container && this.container.type == ContainerType.Dirty) {
+      this.$store.commit('modifyDirtyCount', -1);
+    }
   }
 
   changeContainerTo(type: number) {

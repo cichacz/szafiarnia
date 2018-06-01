@@ -9,16 +9,21 @@ Vue.use(BootstrapVue);
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import {Prop, Watch} from "vue-property-decorator";
+import ItemCardComponent from "@/components/item-card/ItemCard.vue";
 
-@Component
+@Component({
+  components: {
+    'item-card': ItemCardComponent
+  }
+})
 export default class PackingComponent extends Vue {
-  
+
   container: Container | undefined;
   items: Item[] = [];
   packed: Item[] = [];
-  ready: boolean = false;
-  busyTimeout: any;
+  hasStarted: boolean = false;
   tripLength: number = 0;
+  tabIndex: number = 0;
 
   underwearAndSocks = [PackingCategory.Underwear, PackingCategory.Socks];
   normalClothes = [PackingCategory.Shirts, PackingCategory.Trousers, PackingCategory.Skirts];
@@ -29,43 +34,64 @@ export default class PackingComponent extends Vue {
     this.loadContainerData();
   }
 
-  @Watch('tripLength')
-  onTripLengthChange(tripLength: number) {
-    this.chooseDefault();
-  }
-
   loadContainerData() {
-    this.container = this.$store.state.containers.list.find((el: Container) => el.type == 0);
+    this.container = this.$store.state.containers.list.find((el: Container) => el.type == ContainerType.Default);
     if (this.container) {
-      this.$dao.getContainerItems(this.container).then(data => {
-        clearTimeout(this.busyTimeout);
-        this.ready = true;
-        if (data) {
-          this.items = data;
-          this.chooseDefault;
-          if(this.container && this.container.type == ContainerType.Dirty) {
-            this.$store.commit('setDirtyCount', this.items.length);
-          }
-        }
+      this.$dao.getContainerItems(this.container).then((data: Item[]) => {
+        this.items = data;
       });
     }
   }
 
+  @Watch('tabIndex')
+  onTabIndexChange(val: number) {
+    if(val === 0) {
+      this.hasStarted = false;
+    }
+  }
+
+  startPacking() {
+    this.$validator.validateAll().then((result: any) => {
+      if(result) {
+        this.chooseDefault();
+        this.hasStarted = true;
+        this.$nextTick(() => {
+          this.tabIndex++;
+        });
+      }
+    }).catch(() => {
+      return false
+    });
+  }
+
   chooseDefault() {
-    this.packed.length = 0;
+    this.packed = [];
+
     for (const packingCategory in PackingCategory) {
         if(Number(packingCategory) || Number(packingCategory) == 0) {
           const filtered = this.items.filter(item => {
             return String(item.packingCategory != null ? item.packingCategory : null) == packingCategory;
-          })
+          });
           const multiplier = this.getMultiplier(packingCategory);
           const numberToPack = this.calculateDefaultQuantity(multiplier);
-          var i;
-          for (i = 0; i < (numberToPack > filtered.length ? filtered.length : numberToPack); i++) { 
+          for (let i = 0; i < (numberToPack > filtered.length ? filtered.length : numberToPack); i++) {
             this.packed.push(filtered[i]);
-            this.items.splice(this.items.indexOf(filtered[i]),1);
-          } 
+            // this.items.splice(this.items.indexOf(filtered[i]),1);
+          }
         }
+    }
+  }
+
+  isPacked(item: Item) {
+    return ~this.packed.indexOf(item);
+  }
+
+  toggleItem(item: Item) {
+    let index = this.packed.indexOf(item);
+    if(index < 0) {
+      this.packed.push(item);
+    } else {
+      this.packed.splice(index, 1);
     }
   }
 
@@ -80,7 +106,7 @@ export default class PackingComponent extends Vue {
   }
 
   getMultiplier(category: any) {
-    if(category == PackingCategory.Underwear 
+    if(category == PackingCategory.Underwear
       || category == PackingCategory.Socks
       || category == PackingCategory.Shirts) {
         return 1.2;
@@ -96,11 +122,16 @@ export default class PackingComponent extends Vue {
     return 0;
   }
 
-  finishPacking() {
+  async finishPacking() {
     const travelContainer = this.$store.state.containers.list.find((el: Container) => el.type == 2);
-    this.packed.forEach(item => {
-      this.$dao.moveItem(item, travelContainer);
-    })
-    this.$router.push({name: 'panel'});
+    await Promise.all(this.packed.map(item => {
+      return this.$dao.moveItem(item, travelContainer);
+    }));
+    this.$router.push({name: 'container', params: {id: travelContainer.id}});
+  }
+
+  cancelPacking() {
+    const defaultContainer = this.$store.state.containers.list.find((el: Container) => el.type == ContainerType.Default);
+    this.$router.push({name: 'container', params: {id: defaultContainer.id}});
   }
 }

@@ -5,80 +5,104 @@
                 <h3>
                     <ribbon>Kreator Pakowania</ribbon>
                 </h3>
-                <b-tabs pills card vertical>
+                <b-tabs pills card v-model="tabIndex">
                     <b-tab title="Start" active>
                         <form>
                             <div class="form-group">
                                 <label for="tripLength">Witamy w kreatorze pakowania przedmiotów w Szafiarni. Wprowadź
                                     liczbę dni zaplanowanego wyjazdu:</label>
-                                <input type="number" class="form-control" v-model="tripLength" id="tripLength" aria-describedby="emailHelp"
-                                       placeholder="Liczba dni" required>
-                                <small id="numberHelp" class="form-text text-muted">Liczba dni musi zostać wskazana
-                                    wartością liczbową
+                                <input type="number" class="form-control" v-model="tripLength" id="tripLength" name="liczba dni" aria-describedby="emailHelp"
+                                       placeholder="Liczba dni" v-validate="'required|min_value:1'">
+                                <small id="numberHelp" class="form-text text-muted">
+                                    Liczba dni musi zostać wskazana wartością liczbową
+                                </small>
+                                <small class="form-text text-danger" v-if="errors.has('liczba dni')">
+                                    {{ errors.first('liczba dni') }}
                                 </small>
                             </div>
-                            <b-button>Przejdź dalej</b-button>
+                            <div class="text-center mt-5">
+                                <b-button variant="primary" @click.prevent="startPacking">Rozpocznij pakowanie</b-button>
+                            </div>
                         </form>
                     </b-tab>
-                    <b-tab title="Bielizna i skarpety">
-                        <p>Wybrane</p>
-                        <ul>
-                            <li v-for="item in filterByCategories(underwearAndSocks, packed)" :key="item.id" :item="item" :container="container">
-                                {{ item.name }}
-                            </li>
-                        </ul>
-                        <p>Dostępne</p>
-                        <ul>
-                            <li v-for="item in filterByCategories(underwearAndSocks, items)" :key="item.id" :item="item" :container="container">
-                                {{ item.name }}
-                            </li>
-                        </ul>
+                    <b-tab title="Bielizna i skarpety" :disabled="!hasStarted">
+                        <div class="card-columns">
+                            <item-card v-for="item in filterByCategories(underwearAndSocks, items)"
+                                       :key="item.id"
+                                       :item="item"
+                                       :container="container"
+                                       packing="true"
+                                       :picked="isPacked(item)"
+                                       @item-toggle="toggleItem($event)"
+                            ></item-card>
+                        </div>
+
+                        <div class="text-center mt-5">
+                            <b-button @click.prevent="tabIndex++">Kontynuuj</b-button>
+                        </div>
                     </b-tab>
-                    <b-tab title="Ubrania codzienne">
-                        <p>Wybrane</p>
-                        <ul>
-                            <li v-for="item in filterByCategories(normalClothes, packed)" :key="item.id" :item="item" :container="container">
-                                {{ item.name }}
-                            </li>
-                        </ul>
-                        <p>Dostępne</p>
-                        <ul>
-                            <li v-for="item in filterByCategories(normalClothes, items)" :key="item.id" :item="item" :container="container">
-                                {{ item.name }}
-                            </li>
-                        </ul>
+                    <b-tab title="Ubrania codzienne" :disabled="!hasStarted">
+                        <div class="card-columns">
+                            <item-card v-for="item in filterByCategories(normalClothes, items)"
+                                       :key="item.id"
+                                       :item="item"
+                                       :container="container"
+                                       packing="true"
+                                       :picked="isPacked(item)"
+                                       @item-toggle="toggleItem($event)"
+                            ></item-card>
+                        </div>
+
+                        <div class="text-center mt-5">
+                            <b-button @click.prevent="tabIndex++">Kontynuuj</b-button>
+                        </div>
                     </b-tab>
-                    <b-tab title="Ubrania wierzchnie">
-                        <p>Wybrane</p>
-                        <ul>
-                            <li v-for="item in filterByCategories(outsideClothes, packed)" :key="item.id" :item="item" :container="container">
-                                {{ item.name }}
-                            </li>
-                        </ul>
-                        <p>Dostępne</p>
-                        <ul>
-                            <li v-for="item in filterByCategories(outsideClothes, items)" :key="item.id" :item="item" :container="container">
-                                {{ item.name }}
-                            </li>
-                        </ul>
+                    <b-tab title="Ubrania wierzchnie" :disabled="!hasStarted">
+                        <div class="card-columns">
+                            <item-card v-for="item in filterByCategories(outsideClothes, items)"
+                                       :key="item.id"
+                                       :item="item"
+                                       :container="container"
+                                       packing="true"
+                                       :picked="isPacked(item)"
+                                       @item-toggle="toggleItem($event)"
+                            ></item-card>
+                        </div>
+
+                        <div class="text-center mt-5">
+                            <b-button @click.prevent="tabIndex++">Kontynuuj</b-button>
+                        </div>
                     </b-tab>
-                    <b-tab title="Buty, akcesoria i inne">
-                        <p>Wybrane</p>
-                        <ul>
-                            <li v-for="item in filterByCategories(shoesAndOthers, packed)" :key="item.id" :item="item" :container="container">
-                                {{ item.name }}
-                            </li>
-                        </ul>
-                        <p>Dostępne</p>
-                        <ul>
-                            <li v-for="item in filterByCategories(shoesAndOthers, items)" :key="item.id" :item="item" :container="container">
-                                {{ item.name }}
-                            </li>
-                        </ul>
+                    <b-tab title="Buty, akcesoria i inne" :disabled="!hasStarted">
+                        <div class="card-columns">
+                            <item-card v-for="item in filterByCategories(shoesAndOthers, items)"
+                                       :key="item.id"
+                                       :item="item"
+                                       :container="container"
+                                       packing="true"
+                                       :picked="isPacked(item)"
+                                       @item-toggle="toggleItem($event)"
+                            ></item-card>
+                        </div>
+
+                        <div class="text-center mt-5">
+                            <b-button @click.prevent="tabIndex++">Kontynuuj</b-button>
+                        </div>
                     </b-tab>
-                    <b-tab title="Koniec">
-                        <b-button v-on:click="finishPacking()">Zatwierdź wybór i przejdź do spakowanych rzeczy</b-button>
-                        <b-button>Porzuć kreator</b-button>
+                    <b-tab title="Koniec" :disabled="!hasStarted">
+                        <transition-group name="pop-in" tag="div" class="card-columns">
+                            <item-card v-for="item in packed"
+                                       :key="item.id"
+                                       :item="item"
+                                       :container="container"
+                                       packing="true"
+                                       picked="true"
+                                       @item-toggle="toggleItem($event)"
+                            ></item-card>
+                        </transition-group>
+
+                        <b-button v-on:click="finishPacking()" variant="primary">Zatwierdź wybór i przejdź do spakowanych rzeczy</b-button>
+                        <b-button @click.prevent="cancelPacking()">Porzuć kreator</b-button>
                     </b-tab>
                 </b-tabs>
             </div>

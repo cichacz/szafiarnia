@@ -13,6 +13,12 @@ export default class ItemCardComponent extends Vue {
   @Prop()
   container: Container;
 
+  @Prop()
+  packing: boolean;
+
+  @Prop()
+  picked: boolean;
+
   busy: boolean = false;
 
   get isClean() {
@@ -48,6 +54,10 @@ export default class ItemCardComponent extends Vue {
     }
   }
 
+  toggleItem() {
+    this.$emit('item-toggle', this.item);
+  }
+
   deleteItem() {
     swal({
       title: "Jesteś pewien?",
@@ -64,9 +74,6 @@ export default class ItemCardComponent extends Vue {
           this.busy = true;
           this.$dao.deleteItem(this.item).then(() => {
             this.$emit('item-remove', this.item);
-            if(!this.isClean) {
-              this.$store.commit('modifyDirtyCount', -1);
-            }
             this.busy = false;
             swal("Zrobione!", "Przedmiot został usunięty!", "success");
           });

@@ -1,19 +1,25 @@
 <template>
-    <div class="card shadow mt-4">
+    <div class="card shadow mt-4" :class="{'text-white bg-success': picked}">
         <img class="card-img-top" :src="item.image" :alt="item.name">
         <div class="card-body">
             <h5 class="card-title">{{ item.name }}</h5>
             <p class="card-text" v-html="categoryDisplay()"></p>
         </div>
         <div class="card-footer bg-white text-center p-1">
-            <a href="#" v-if="isClean" @click.prevent="setAsDirty()" class="btn">Przenieś do prania</a>
-            <a href="#" v-if="!isClean" @click.prevent="setAsClean()" class="btn text-success">Oznacz jako wyprane</a>
-            <div class="btn-group btn-group-sm d-block" role="group">
-                <router-link :to="{name: 'item', params: {id: item.id, container: item.idContainer}}" class="card-linkbtn text-secondary">
-                    Edytuj
-                </router-link>
-                <a href="#" @click.prevent="deleteItem()" class="btn text-danger">Usuń</a>
-            </div>
+            <template v-if="packing">
+                <a href="#" v-if="picked" @click.prevent="toggleItem()" class="btn btn-block text-success">Odznacz</a>
+                <a href="#" v-if="!picked" @click.prevent="toggleItem()" class="btn btn-block text-muted">Zaznacz</a>
+            </template>
+            <template v-else>
+                <a href="#" v-if="isClean" @click.prevent="setAsDirty()" class="btn">Przenieś do prania</a>
+                <a href="#" v-if="!isClean" @click.prevent="setAsClean()" class="btn text-success">Oznacz jako wyprane</a>
+                <div class="btn-group btn-group-sm d-block" role="group">
+                    <router-link :to="{name: 'item', params: {id: item.id, container: item.idContainer}}" class="card-linkbtn text-secondary">
+                        Edytuj
+                    </router-link>
+                    <a href="#" @click.prevent="deleteItem()" class="btn text-danger">Usuń</a>
+                </div>
+            </template>
         </div>
         <div v-show="busy" class="card-img-overlay">
             <div class="sk-cube-grid">
