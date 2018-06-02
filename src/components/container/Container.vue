@@ -23,18 +23,21 @@
             </div>
             <div v-else key="ready" class="row justify-content-center">
                 <div class="col-sm-8 col-md-6 col-lg-5">
-                    <div class="text-center content">
-                        <router-link :to="{name: 'item-add'}" class="btn btn-outline-primary d-block text-left d-sm-inline-block mb-3 mb-sm-auto">
+                    <div v-if="showActions" class="text-center content">
+                        <router-link v-if="container.type == containerType.Default" :to="{name: 'item-add'}" class="btn btn-outline-primary d-block text-left d-sm-inline-block mb-3 mb-sm-auto">
                             <i class="fa fa-plus fa-fw"></i> Dodaj przedmiot
                         </router-link>
-                        <router-link :to="{name: 'item-pack'}" class="btn btn-outline-info d-block text-left d-sm-inline-block">
+                        <router-link v-if="!onTrip && container.type != containerType.Dirty" :to="{name: 'item-pack'}" class="btn btn-outline-info d-block text-left d-sm-inline-block">
                             <i class="fa fa-suitcase fa-fw"></i> Spakuj się
                         </router-link>
-                        <div v-if="container.type == 2" v-on:click="changeContainerTo(1)" class="btn btn-outline-info d-block text-left d-sm-inline-block">
+                        <button v-if="container.type == containerType.Trip" ref="changeBtn" v-on:click="changeContainerTo(containerType.Dirty)" class="btn btn-outline-info d-block text-left d-sm-inline-block">
                             Rozpakuj się
-                        </div>
-                        <div v-if="container.type == 1" v-on:click="changeContainerTo(0)" class="btn btn-outline-info d-block text-left d-sm-inline-block">
+                        </button>
+                        <button v-else-if="container.type == containerType.Dirty && items.length" ref="changeBtn" v-on:click="changeContainerTo(containerType.Default)" class="btn btn-outline-info d-block text-left d-sm-inline-block">
                             Zrób pranie
+                        </button>
+                        <div v-if="!items.length">
+                            <h3>Brak przedmiotów</h3>
                         </div>
                     </div>
                 </div>

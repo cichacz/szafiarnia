@@ -7,7 +7,7 @@
                 </h3>
                 <b-tabs pills card v-model="tabIndex">
                     <b-tab title="Start" active>
-                        <form>
+                        <form @submit.prevent="startPacking">
                             <div class="form-group">
                                 <label for="tripLength">Witamy w kreatorze pakowania przedmiotów w Szafiarni. Wprowadź
                                     liczbę dni zaplanowanego wyjazdu:</label>
@@ -21,7 +21,7 @@
                                 </small>
                             </div>
                             <div class="text-center mt-5">
-                                <b-button variant="primary" @click.prevent="startPacking">Rozpocznij pakowanie</b-button>
+                                <b-button variant="primary" type="submit">Rozpocznij pakowanie</b-button>
                             </div>
                         </form>
                     </b-tab>
@@ -101,7 +101,7 @@
                             ></item-card>
                         </transition-group>
 
-                        <b-button v-on:click="finishPacking()" variant="primary">Zatwierdź wybór i przejdź do spakowanych rzeczy</b-button>
+                        <b-button ref="saveBtn" v-on:click="finishPacking()" variant="primary" class="float-right">Zatwierdź listę</b-button>
                         <b-button @click.prevent="cancelPacking()">Porzuć kreator</b-button>
                     </b-tab>
                 </b-tabs>
