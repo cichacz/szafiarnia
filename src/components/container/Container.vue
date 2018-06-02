@@ -36,7 +36,7 @@
                         <button v-else-if="container.type == containerType.Dirty && items.length" ref="changeBtn" v-on:click="changeContainerTo(containerType.Default)" class="btn btn-outline-info d-block text-left d-sm-inline-block">
                             Zrób pranie
                         </button>
-                        <div v-if="!items.length">
+                        <div v-if="container.type == containerType.Dirty && !items.length">
                             <h3>Brak przedmiotów</h3>
                         </div>
                     </div>
