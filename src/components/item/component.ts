@@ -33,10 +33,15 @@ export default class ItemComponent extends Vue {
 
   updated: boolean = false;
   loading: boolean = true;
-  imagePreview: string | File | null = this.currentItem.image;
+  imagePreview: string | File | null = null;
 
   get formTitle() {
     return this.currentItem.name.length ? this.currentItem.name : 'Dodaj nowy przedmiot';
+  }
+
+  @Watch('currentItem')
+  onCurrentItemChange(item: Item) {
+    this.imagePreview = item.image;
   }
 
   async created() {

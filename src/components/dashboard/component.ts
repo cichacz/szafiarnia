@@ -7,11 +7,20 @@ import {Route} from 'vue-router'
 @Component
 export default class DashboardComponent extends Vue {
   get containers(): Container[] {
-    return this.$store.state.containers.list;
+    const containers = this.$store.state.containers.list;
+    if(this.onTrip) {
+      return containers;
+    }
+
+    return containers.filter((el: Container) => el.type != ContainerType.Trip);
   }
 
   get dirtyCount() {
     return this.$store.state.containers.dirtyCount;
+  }
+
+  get onTrip() {
+    return this.$store.state.containers.onTrip;
   }
 
   @Watch('containers')
@@ -31,6 +40,15 @@ export default class DashboardComponent extends Vue {
       default:
         return false;
     }
+  }
+
+  beforeRouteUpdate(to: Route, from: Route, next: Function) {
+    if(to.name === 'panel') {
+      let defaultContainer = this.containers.filter((el: Container) => el.type == ContainerType.Default);
+      next(this.getUrl(defaultContainer.pop()!));
+      return;
+    }
+    next();
   }
 
   showDefaultContianer(containers: Container[]) {

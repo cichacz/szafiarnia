@@ -4,6 +4,7 @@ export default {
   state: {
     list: [],
     dirtyCount: 0,
+    onTrip: false,
   },
   getters: {
     containers: state => () => state.list,
@@ -18,6 +19,9 @@ export default {
     modifyDirtyCount(state, modifier) {
       state.dirtyCount += modifier;
     },
+    setOnTrip(state, status) {
+      state.onTrip = status;
+    },
   },
   actions: {
     loadContainers({ commit }, dao) {
@@ -26,6 +30,12 @@ export default {
 
         dao.getContainerItemsCount(list.find(x => x.type === ContainerType.Dirty)).then((count) => {
           commit('setDirtyCount', count);
+        });
+
+        dao.getContainerItemsCount(list.find(x => x.type === ContainerType.Trip)).then((count) => {
+          if (count) {
+            commit('setOnTrip', true);
+          }
         });
       });
     },

@@ -10,6 +10,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import {Prop, Watch} from "vue-property-decorator";
 import ItemCardComponent from "@/components/item-card/ItemCard.vue";
+import * as Ladda from 'ladda';
+import {LaddaButton} from "ladda";
 
 @Component({
   components: {
@@ -123,10 +125,23 @@ export default class PackingComponent extends Vue {
   }
 
   async finishPacking() {
+    let l: LaddaButton | null = null;
+    const btn = this.$refs.saveBtn;
+    if(btn instanceof HTMLButtonElement) {
+      l = Ladda.create(btn);
+      l.start();
+    }
+
     const travelContainer = this.$store.state.containers.list.find((el: Container) => el.type == 2);
     await Promise.all(this.packed.map(item => {
       return this.$dao.moveItem(item, travelContainer);
     }));
+
+    if(l) {
+      l.stop();
+    }
+
+    this.$store.commit('setOnTrip', this.packed.length > 0);
     this.$router.push({name: 'container', params: {id: travelContainer.id}});
   }
 
