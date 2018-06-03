@@ -14,7 +14,7 @@
                                 <p>Szafiarnia oferuje 3 najważniejsze tryby zarządzania ubraniem. Szafa, Podróż i Pranie. Pozwalają one zoptymalizować codzienny wysiłek poświęcany na analizowanie szafy i ułatwiają dokonywanie wyborów.</p>
                                 <p> Tryb szafa pozwala na zgromadzenie i kontrolowanie wszystkich ubrań. Dzięki czemu twój dzień będzie prostszy a cała gama rzeczy dostępna za jednym kliknięciem.</p>
                                 <p> Tryb podróż jest miniaturową wersją twojej szafy, udostępnia łatwy kreator pakowania, który pozwoli dobrać ci optymalną ilość rzeczy na całą twoją podróż. Nigdy już nie zapomnisz o dodatkowej porcji bielizny, a gdy ubrudzisz swoje ulubione spodnie zawsze będziesz mieć zapasowe. Tryb szafy pomoże ci się również szybko rozpakować po zakończonej podróży.</p>
-                                <p> Tryb pranie pozwoli ci szybko wskazać brudne rzeczy i zarządzać praniem w ciągu dwóch kliknięć, twoje rzeczy przeniosą się wtedy z szafy głównej do szafy Pranie i nie pomylisz się podczas wybierania ich na codzień </p>
+                                <p> Tryb pranie pozwoli ci szybko wskazać brudne rzeczy i zarządzać praniem w ciągu dwóch kliknięć, twoje rzeczy przeniosą się wtedy z szafy głównej do szafy Pranie i nie pomylisz się podczas wybierania ich na codzień. </p>
                             </p>
                             <div class="row justify-content-center">
                                 <div class="col-sm-7 col-md-8 col-lg-6">
@@ -41,30 +41,30 @@
                     <div class="row justify-content-center">
                         <div class="col-md-4">
                             <div class="card">
-                                <img class="card-img-top" src="http://via.placeholder.com/250x150" alt="Card image cap">
+                                <img class="card-img-top" src="/static/img/pic1.png" alt="Card image cap">
                                 <div class="card-body">
                                     <p class="card-text">
-                                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                                        Szybki podgląd elementów, oraz najważniejsze opcje pod jednym kliknięciem.
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="card">
-                                <img class="card-img-top" src="http://via.placeholder.com/250x150" alt="Card image cap">
+                                <img class="card-img-top" src="/static/img/pic2.png" alt="Card image cap">
                                 <div class="card-body">
                                     <p class="card-text">
-                                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                                        Zaawansowane możliwości edycji i dopasowywania swojego ubrania.
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="card">
-                                <img class="card-img-top" src="http://via.placeholder.com/250x150" alt="Card image cap">
+                                <img class="card-img-top" src="/static/img/pic3.png" alt="Card image cap">
                                 <div class="card-body">
                                     <p class="card-text">
-                                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                                        Łatwy kreator podpowiadający co warto wziąć na podróż w oparciu o podaną przez ciebie liczbę dni.
                                     </p>
                                 </div>
                             </div>
