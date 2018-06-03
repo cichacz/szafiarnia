@@ -10,12 +10,11 @@
                             </h1>
                             <h2 class="text-center">Aplikacja do zarządzania szafą</h2>
                             <p class="content-text">
-                                Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non
-                                felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula.
-                                Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac,
-                                laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla imperdiet sit
-                                amet magna. Vestibulum dapibus, mauris nec malesuada fames ac turpis velit, rhoncus eu,
-                                luctus et interdum adipiscing wisi.
+                                <p>Szafiarnia to innowacyjny system zarządzający twoimi ubraniami w szafie i w trakcie podróży. Dzięki niemu już nigdy nie zgubisz się w trakcie pakowania do podróży.</p>
+                                <p>Szafiarnia oferuje 3 najważniejsze tryby zarządzania ubraniem. Szafa, Podróż i Pranie. Pozwalają one zoptymalizować codzienny wysiłek poświęcany na analizowanie szafy i ułatwiają dokonywanie wyborów.</p>
+                                <p> Tryb szafa pozwala na zgromadzenie i kontrolowanie wszystkich ubrań. Dzięki czemu twój dzień będzie prostszy a cała gama rzeczy dostępna za jednym kliknięciem.</p>
+                                <p> Tryb podróż jest miniaturową wersją twojej szafy, udostępnia łatwy kreator pakowania, który pozwoli dobrać ci optymalną ilość rzeczy na całą twoją podróż. Nigdy już nie zapomnisz o dodatkowej porcji bielizny, a gdy ubrudzisz swoje ulubione spodnie zawsze będziesz mieć zapasowe. Tryb szafy pomoże ci się również szybko rozpakować po zakończonej podróży.</p>
+                                <p> Tryb pranie pozwoli ci szybko wskazać brudne rzeczy i zarządzać praniem w ciągu dwóch kliknięć, twoje rzeczy przeniosą się wtedy z szafy głównej do szafy Pranie i nie pomylisz się podczas wybierania ich na codzień </p>
                             </p>
                             <div class="row justify-content-center">
                                 <div class="col-sm-7 col-md-8 col-lg-6">
