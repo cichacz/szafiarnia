@@ -15,7 +15,6 @@
                                 <p> Tryb szafa pozwala na zgromadzenie i kontrolowanie wszystkich ubrań. Dzięki czemu twój dzień będzie prostszy a cała gama rzeczy dostępna za jednym kliknięciem.</p>
                                 <p> Tryb podróż jest miniaturową wersją twojej szafy, udostępnia łatwy kreator pakowania, który pozwoli dobrać ci optymalną ilość rzeczy na całą twoją podróż. Nigdy już nie zapomnisz o dodatkowej porcji bielizny, a gdy ubrudzisz swoje ulubione spodnie zawsze będziesz mieć zapasowe. Tryb szafy pomoże ci się również szybko rozpakować po zakończonej podróży.</p>
                                 <p> Tryb pranie pozwoli ci szybko wskazać brudne rzeczy i zarządzać praniem w ciągu dwóch kliknięć, twoje rzeczy przeniosą się wtedy z szafy głównej do szafy Pranie i nie pomylisz się podczas wybierania ich na codzień. </p>
-                            </p>
                             <div class="row justify-content-center">
                                 <div class="col-sm-7 col-md-8 col-lg-6">
                                     <router-link :to="{name: 'panel'}" class="btn btn-primary btn-block btn-lg mt-4">
